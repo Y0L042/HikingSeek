@@ -48,6 +48,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_generate_stepup_rays()
 
 
 
@@ -56,6 +57,7 @@ func _generate_stepup_rays() -> void:
 	for i in STEP_UP_RAY_COUNT - 1:
 		var new_ray: CollisionShape3D = BaseStepUpSeparationRay.duplicate()
 		add_child(new_ray)
+		stepup_ray_list.append(new_ray)
 
 
 
@@ -64,6 +66,8 @@ func _unhandled_input(event):
 		Body.global_rotate(Vector3.UP, -event.relative.x * SENSITIVITY)
 		Head.rotate_x(-event.relative.y * SENSITIVITY)
 		Head.rotation.x = clamp(Head.rotation.x, deg_to_rad(-88), deg_to_rad(88))
+
+
 
 func _physics_process(delta):
 	# Add gravity.
@@ -144,7 +148,22 @@ func _rotate_step_up_separation_ray():
 		var ray: CollisionShape3D = stepup_ray_list[ray_idx]
 		ray.global_position.x = self.global_position.x + xz_ray_pos.x
 		ray.global_position.z = self.global_position.z + xz_ray_pos.z
-	
+
+	# Checking steepness for each ray
+	var max_slope_ang_dot: float = 0.5
+	var any_too_steep: bool = false
+	for ray in stepup_ray_list:
+		var raycast: RayCast3D = ray.get_child(0)
+		raycast.force_raycast_update()  # Update the raycast
+		if raycast.is_colliding():
+			var ray_normal = raycast.get_collision_normal()
+			if ray_normal.dot(Vector3(0, 1, 0)) < max_slope_ang_dot:
+				any_too_steep = true
+				break  # Exit loop if any ray hits a steep slope
+
+	# Take action based on the steepness check
+	for ray in stepup_ray_list:
+		ray.disabled = any_too_steep
 
 func _rotate_step_up_separation_ray_DISABLED():
 	var xz_vel = velocity * Vector3(1,0,1)

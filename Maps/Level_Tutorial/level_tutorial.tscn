@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ci8ypgrlrr884"]
+[gd_scene load_steps=13 format=3 uid="uid://ci8ypgrlrr884"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://dctquy0x53884" path="res://Maps/Level_Tutorial/terrain.res" id="1_ih366"]
 [ext_resource type="PackedScene" uid="uid://bixl2bghc80tt" path="res://Entities/Player/Player.tscn" id="2_0d7u7"]
@@ -41,6 +41,9 @@ show_checkered = true
 
 [sub_resource type="Terrain3DTextureList" id="Terrain3DTextureList_adcvj"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3xrhh"]
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vxuto"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -79,6 +82,7 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7145, -0.810332, 2.90907)
 use_collision = true
 size = Vector3(6.10352, 2.19031, 3.3833)
+material = SubResource("StandardMaterial3D_3xrhh")
 
 [node name="Lighting" type="Marker3D" parent="World"]
 
@@ -100,7 +104,8 @@ shape = SubResource("SphereShape3D_pp876")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Entities/RigidBody3D"]
 
-[node name="Player" parent="Entities" node_paths=PackedStringArray("Body", "Head", "HeadTarget") instance=ExtResource("2_0d7u7")]
+[node name="Player" parent="Entities" node_paths=PackedStringArray("Body", "Head", "HeadTarget", "BaseStepUpSeparationRay") instance=ExtResource("2_0d7u7")]
 Body = NodePath(".")
 Head = NodePath("Head_Target/Head")
 HeadTarget = NodePath("Head_Target")
+BaseStepUpSeparationRay = NodePath("StepUpSeparationRay_F")
