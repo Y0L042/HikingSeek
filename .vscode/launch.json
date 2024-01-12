@@ -1,0 +1,117 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "6007 [NoBuild] Launch Game with EditorDebug",
+            "type": "coreclr",
+            "request": "launch",
+            // "preLaunchTask": "build",
+            "program": "${env:GODOT}",
+            "args": [
+                "--remote-debug", "tcp://127.0.0.1:6007",
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+        },
+        {
+            "name": "6008 [NoBuild] Launch Game with EditorDebug",
+            "type": "coreclr",
+            "request": "launch",
+            // "preLaunchTask": "build",
+            "program": "${env:GODOT}",
+            "args": [
+                "--remote-debug", "tcp://127.0.0.1:6008",
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+        },
+        {
+            "name": "[OnlyBuild]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT}",
+            "args": [
+                "--remote-debug", "tcp://127.0.0.1:6008",
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": true,
+        },
+        {
+            "name": "6007 Launch Game with EditorDebug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT}",
+            "args": [
+                "--remote-debug", "tcp://127.0.0.1:6007",
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+        },
+        {
+            "name": "6008 Launch Game with EditorDebug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:GODOT}",
+            "args": [
+                "--remote-debug", "tcp://127.0.0.1:6008",
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+        },
+        {
+            "name": "6007 GDScript Godot",
+            "type": "godot",
+            "request": "launch",
+            "project": "${workspaceFolder}",
+            "port": 6007,
+            "address": "127.0.0.1",
+            "launch_game_instance": true,
+            "launch_scene": false
+            
+        },
+        {
+            "name": "Play in Editor",
+            "type": "godot-mono",
+            "mode": "playInEditor",
+            "request": "launch"
+        },
+        {
+            "name": "Launch",
+            "type": "godot-mono",
+            "request": "launch",
+            "mode": "executable",
+            "preLaunchTask": "build",
+            "executable": "<insert-godot-executable-path-here>",
+            "executableArguments": [
+                "--path",
+                "${workspaceRoot}"
+            ]
+        },
+        {
+            "name": "Launch (Select Scene)",
+            "type": "godot-mono",
+            "request": "launch",
+            "mode": "executable",
+            "preLaunchTask": "build",
+            "executable": "<insert-godot-executable-path-here>",
+            "executableArguments": [
+                "--path",
+                "${workspaceRoot}",
+                "${command:SelectLaunchScene}"
+            ]
+        },
+        {
+            "name": "Attach",
+            "type": "godot-mono",
+            "request": "attach",
+            "address": "localhost",
+            "port": 23685
+        }
+    ]
+}

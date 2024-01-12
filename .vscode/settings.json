@@ -1,0 +1,12 @@
+{
+	"settings":
+	{
+        "window.restoreWindows": "all",
+		"godot_tools.editor_path": "{env:GODOT}",
+		"godot_tools.gdscript_lsp_server_port": 6005
+	},
+	"godot_tools.editor_path": "{env:GODOT}",
+	"godot_tools.gdscript_lsp_server_port": 6005,
+	"godot_tools.reconnect_attempts": 5000,
+	"godot_tools.reconnect_cooldown": 300,
+}
