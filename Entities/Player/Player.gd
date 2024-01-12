@@ -5,6 +5,9 @@ extends CharacterBody3D
 @export var Head: Node3D
 @export var HeadTarget: Node3D
 @export_subgroup("Raycast Node References")
+@export var STEP_UP_RAY_COUNT: float = 8
+@export var BaseStepUpSeparationRay: CollisionShape3D
+
 @export var StepUpSeparationRay_F: CollisionShape3D
 @export var StepUpSeparationRay_L: CollisionShape3D
 @export var StepUpSeparationRay_R: CollisionShape3D
@@ -27,8 +30,9 @@ extends CharacterBody3D
 @export var BASE_FOV: float = 100.0
 @export var FOV_CHANGE: float = 1.5
 
-@onready var _initial_separation_ray_dist = abs($StepUpSeparationRay_F.position.z)
+@onready var _initial_separation_ray_dist = abs(BaseStepUpSeparationRay.position.z)
 
+var stepup_ray_list: Array[CollisionShape3D] = []
 var speed: float
 var camera_offset: Vector3
 var t_bob: float
@@ -40,10 +44,20 @@ var _snapped_to_stairs_last_frame: bool = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	var new_box = $StepUpSeparationRay_F.duplicate()
-	add_child(new_box)
+
+
+
+func _generate_stepup_rays() -> void:
+	stepup_ray_list.append(BaseStepUpSeparationRay)
+	for i in STEP_UP_RAY_COUNT - 1:
+		var new_ray: CollisionShape3D = BaseStepUpSeparationRay.duplicate()
+		add_child(new_ray)
+
+
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -115,6 +129,24 @@ func _snap_down_to_stairs_check():
 
 
 func _rotate_step_up_separation_ray():
+	var angle_step: float = 360.0 / STEP_UP_RAY_COUNT
+	var xz_vel: Vector3 = velocity * Vector3(1, 0, 1)
+	if xz_vel.length() < 0.1:
+		xz_vel = _last_xz_vel
+	else:
+		_last_xz_vel = xz_vel
+
+	for ray_idx in range(STEP_UP_RAY_COUNT):
+		var ray_angle = deg_to_rad(angle_step * ray_idx)
+		var xz_ray_pos = xz_vel.normalized() * _initial_separation_ray_dist
+		xz_ray_pos = xz_ray_pos.rotated(Vector3(0, 1.0, 0), ray_angle)
+
+		var ray: CollisionShape3D = stepup_ray_list[ray_idx]
+		ray.global_position.x = self.global_position.x + xz_ray_pos.x
+		ray.global_position.z = self.global_position.z + xz_ray_pos.z
+	
+
+func _rotate_step_up_separation_ray_DISABLED():
 	var xz_vel = velocity * Vector3(1,0,1)
 
 	if xz_vel.length() < 0.1:

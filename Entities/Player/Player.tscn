@@ -15,6 +15,18 @@ script = ExtResource("1_s7lkf")
 Body = NodePath(".")
 Head = NodePath("Head_Target/Head")
 HeadTarget = NodePath("Head_Target")
+WALK_SPEED = null
+SPRINT_SPEED = null
+JUMP_VELOCITY = null
+SENSITIVITY = null
+JUMP_FRAME_GRACE = null
+BOB_EFFECTS_ENABLED = null
+BOB_FREQ = null
+BOB_AMP = null
+HEADSPRING = null
+FOV_EFFECTS_ENABLED = null
+BASE_FOV = null
+FOV_CHANGE = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.005, 0)
