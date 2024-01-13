@@ -27,7 +27,7 @@ extends CharacterBody3D
 @export var BASE_FOV: float = 100.0
 @export var FOV_CHANGE: float = 1.5
 
-@onready var _initial_separation_ray_dist = abs(BaseStepUpSeparationRay.position.z)
+@onready var _initial_separation_ray_dist: float = abs(BaseStepUpSeparationRay.position.z)
 
 var input_flag_is_moving: bool
 var input_flag_sprint: bool
@@ -58,7 +58,7 @@ var _input_crouch_mode_held: bool
 var _flag_input_crouch: bool
 
 
-func _ready():
+func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_generate_stepup_rays()
 
@@ -66,14 +66,14 @@ func _ready():
 
 func _generate_stepup_rays() -> void:
 	stepup_ray_list.append(BaseStepUpSeparationRay)
-	for i in STEP_UP_RAY_COUNT - 1:
+	for i: int in STEP_UP_RAY_COUNT - 1:
 		var new_ray: CollisionShape3D = BaseStepUpSeparationRay.duplicate()
 		add_child(new_ray)
 		stepup_ray_list.append(new_ray)
 
 
 
-func _unhandled_input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		Body.global_rotate(Vector3.UP, -event.relative.x * SENSITIVITY)
 		Head.rotate_x(-event.relative.y * SENSITIVITY)
@@ -89,7 +89,7 @@ func _unhandled_input(event):
 	input_flag_sprint = Input.is_action_pressed("player_sprint")
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	# Add gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -108,8 +108,8 @@ func _physics_process(delta):
 		speed = WALK_SPEED
 
 	# Get the input direction and handle the movement/deceleration.
-	var input_dir = Input.get_vector("player_left", "player_right", "player_forward", "player_backward")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var input_dir: Vector2 = Input.get_vector("player_left", "player_right", "player_forward", "player_backward")
+	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * speed
@@ -133,16 +133,16 @@ func _physics_process(delta):
 
 
 
-func _snap_down_to_stairs_check():
-	var did_snap = false
+func _snap_down_to_stairs_check() -> void:
+	var did_snap: bool = false
 	if not is_on_floor() and velocity.y <= 0 and (_was_on_floor_last_frame or _snapped_to_stairs_last_frame) and $StairsBelowRayCast3D.is_colliding():
-		var body_test_result = PhysicsTestMotionResult3D.new()
-		var params = PhysicsTestMotionParameters3D.new()
-		var max_step_down = -0.5
+		var body_test_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+		var params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
+		var max_step_down: float = -0.5
 		params.from = self.global_transform
 		params.motion = Vector3(0,max_step_down,0)
 		if PhysicsServer3D.body_test_motion(self.get_rid(), params, body_test_result):
-			var translate_y = body_test_result.get_travel().y
+			var translate_y: float = body_test_result.get_travel().y
 			self.position.y += translate_y
 			apply_floor_snap()
 			did_snap = true
@@ -152,7 +152,7 @@ func _snap_down_to_stairs_check():
 
 
 
-func _rotate_step_up_separation_ray():
+func _rotate_step_up_separation_ray() -> void:
 	var character: CharacterBody3D = self
 	var angle_step: float = 360.0 / STEP_UP_RAY_COUNT
 	var xz_vel: Vector3 = character.velocity * Vector3(1, 0, 1)
@@ -161,9 +161,9 @@ func _rotate_step_up_separation_ray():
 	else:
 		_last_xz_vel = xz_vel
 
-	for ray_idx in range(STEP_UP_RAY_COUNT):
-		var ray_angle = deg_to_rad(angle_step * ray_idx)
-		var xz_ray_pos = xz_vel.normalized() * _initial_separation_ray_dist
+	for ray_idx: int in range(STEP_UP_RAY_COUNT):
+		var ray_angle: float = deg_to_rad(angle_step * ray_idx)
+		var xz_ray_pos: Vector3 = xz_vel.normalized() * _initial_separation_ray_dist
 		xz_ray_pos = xz_ray_pos.rotated(Vector3(0, 1.0, 0), ray_angle)
 
 		var ray: CollisionShape3D = stepup_ray_list[ray_idx]
@@ -172,36 +172,36 @@ func _rotate_step_up_separation_ray():
 
 	# Checking steepness for each ray
 	var any_too_steep: bool = false
-	for ray in stepup_ray_list:
+	for ray: CollisionShape3D in stepup_ray_list:
 		var raycast: RayCast3D = ray.get_child(0)
 		raycast.force_raycast_update()  # Update the raycast
 		if raycast.is_colliding():
-			var ray_normal = raycast.get_collision_normal()
+			var ray_normal: Vector3 = raycast.get_collision_normal()
 			if ray_normal.dot(Vector3(0, 1, 0)) < sin(deg_to_rad(MAX_SLOPE_ANG)):
 				any_too_steep = true
 				break  # Exit loop if any ray hits a steep slope
 
 	# Take action based on the steepness check
-	for ray in stepup_ray_list:
+	for ray: CollisionShape3D in stepup_ray_list:
 		ray.disabled = any_too_steep
 
 
 
-func _juice_camera(delta):
+func _juice_camera(delta: float) -> void:
 	# Head bob
 	t_bob += delta * velocity.length() * float(is_on_floor())
 	%Camera3D.transform.origin = _headbob(t_bob)
 
 	# FOV
 	if !FOV_EFFECTS_ENABLED: return
-	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
-	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
+	var velocity_clamped: float = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
+	var target_fov: float = BASE_FOV + FOV_CHANGE * velocity_clamped
 	%Camera3D.fov = lerp(%Camera3D.fov, target_fov, delta * 8.0)
 
 
 
-func _headbob(time) -> Vector3:
-	var pos = Vector3.ZERO
+func _headbob(time: float) -> Vector3:
+	var pos: Vector3 = Vector3.ZERO
 	pos.y = sin(time * BOB_FREQ) * BOB_AMP
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	#to fix this need to teleport with camera child in portal for CharacterBody3D

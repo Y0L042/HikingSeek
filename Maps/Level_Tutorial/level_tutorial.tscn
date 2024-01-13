@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://ci8ypgrlrr884"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://dctquy0x53884" path="res://Maps/Level_Tutorial/terrain.res" id="1_ih366"]
-[ext_resource type="PackedScene" uid="uid://bixl2bghc80tt" path="res://Entities/Player/Player.tscn" id="2_0d7u7"]
+[ext_resource type="PackedScene" uid="uid://bixl2bghc80tt" path="res://entities/Player/Player.tscn" id="2_0d7u7"]
 [ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://Utils/Geometry/CSGStairMaker3D.tscn" id="2_85nke"]
 
 [sub_resource type="Gradient" id="Gradient_n8y6w"]

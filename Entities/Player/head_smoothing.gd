@@ -13,5 +13,5 @@ func _smooth_motion() -> void:
 	global_rotation.z = HeadRoot.global_rotation.z
 	global_position.x = HeadRoot.global_position.x
 	global_position.z = HeadRoot.global_position.z
-	var tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	var tween: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_property(self, "global_position:y", HeadRoot.global_position.y, 0.1).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)

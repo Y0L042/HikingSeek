@@ -15,6 +15,12 @@ run/main_scene="res://Maps/Level_Tutorial/level_tutorial.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[debug]
+
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/inferred_declaration=1
+
 [dotnet]
 
 project/assembly_name="HikingSeek"

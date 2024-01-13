@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://btbrbcs5sh085"]
 
 [ext_resource type="PackedScene" uid="uid://d1wyywmlxfi46" path="res://Utils/StateMachine/state_machine_handler.tscn" id="1_xlook"]
-[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.gd" id="2_uouk4"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.gd" id="2_uouk4"]
 
 [node name="PlayerStateMachineHandler" instance=ExtResource("1_xlook")]
 script = ExtResource("2_uouk4")

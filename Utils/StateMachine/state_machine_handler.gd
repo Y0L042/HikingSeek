@@ -9,10 +9,10 @@ var current_state: StateClass
 func _ready() -> void:
 	add_to_group("handler")
 
-func _process(_delta: float):
+func _process(_delta: float) -> void:
 	if current_state: current_state.custom_process(_delta)
 
-func _physics_process(_delta: float):
+func _physics_process(_delta: float) -> void:
 	if current_state: current_state.custom_physics_process(_delta)
 
 func _unhandled_input(_event: InputEvent) -> void:
