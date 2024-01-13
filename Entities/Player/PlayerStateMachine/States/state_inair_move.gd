@@ -2,6 +2,7 @@ class_name State_Player_InAir_Move
 extends PlayerStateClass
 
 func enter() -> void:
+	GDebug.print(player, ["Entered State_Player_InAir_Move"])
 	pass
 
 func custom_process(_delta: float) -> void:
@@ -11,7 +12,8 @@ func custom_process(_delta: float) -> void:
 
 func custom_physics_process(_delta: float) -> void:
 	super.custom_physics_process(_delta)
-	#sm_action_comp.state_inair_move_physproc(_delta)
+	player.apply_gravity(_delta)
+	player.move(_delta, max(player.MOVE_STATS.air_move_speed, player.velocity.length()), player.MOVE_STATS.air_acceleration)
 
 func custom_unhandled_input(_event: InputEvent) -> void:
 	super.custom_unhandled_input(_event)

@@ -84,6 +84,42 @@ use_collision = true
 size = Vector3(6.10352, 2.19031, 3.3833)
 material = SubResource("StandardMaterial3D_3xrhh")
 
+[node name="CSGBox3D6" type="CSGBox3D" parent="World/Geometry/CSGBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.715, 0, -7.955)
+use_collision = true
+size = Vector3(6.10352, 2.19031, 3.3833)
+material = SubResource("StandardMaterial3D_3xrhh")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="World/Geometry/CSGBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6643, -0.227509, -5.49856)
+use_collision = true
+size = Vector3(5.62622, 1.73529, 3.3833)
+material = SubResource("StandardMaterial3D_3xrhh")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="World/Geometry/CSGBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.715, 3, -7.955)
+use_collision = true
+size = Vector3(6.104, 2, 3.383)
+material = SubResource("StandardMaterial3D_3xrhh")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="World/Geometry/CSGBoxes"]
+transform = Transform3D(0.875118, 0.483909, 0, -0.483909, 0.875118, 0, 0, 0, 1, 16.5387, 3.64321, -2.3909)
+use_collision = true
+size = Vector3(6.10352, 0.312928, 3.3833)
+material = SubResource("StandardMaterial3D_3xrhh")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="World/Geometry/CSGBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25817, 0.0435644, 3.14387)
+use_collision = true
+size = Vector3(6.10352, 3.8981, 3.3833)
+material = SubResource("StandardMaterial3D_3xrhh")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="World/Geometry/CSGBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.7427, -0.810332, 41.8124)
+use_collision = true
+size = Vector3(107.444, 2.19031, 71.8859)
+material = SubResource("StandardMaterial3D_3xrhh")
+
 [node name="Stairs" type="Marker3D" parent="World/Geometry"]
 
 [node name="CSGStairMaker3D" parent="World/Geometry/Stairs" instance=ExtResource("2_85nke")]
@@ -91,6 +127,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4532, 0.0542246, -2.40716)
 use_collision = true
 size = Vector3(7.71704, 4.10297, 3.26025)
 num_stairs = 12
+
+[node name="CSGStairMaker3D2" parent="World/Geometry/Stairs" instance=ExtResource("2_85nke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.5676, 13.0113, -46.8216)
+use_collision = true
+size = Vector3(63.2589, 32.6421, 12.9451)
+num_stairs = 60
 
 [node name="Lighting" type="Marker3D" parent="World"]
 
@@ -115,8 +157,11 @@ shape = SubResource("SphereShape3D_pp876")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Entities/RigidBody3D"]
 
-[node name="Player" parent="Entities" node_paths=PackedStringArray("Body", "Head", "HeadTarget", "BaseStepUpSeparationRay") instance=ExtResource("2_0d7u7")]
+[node name="Player" parent="Entities" node_paths=PackedStringArray("Body", "Spine", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "BaseStepUpSeparationRay") instance=ExtResource("2_0d7u7")]
 Body = NodePath(".")
-Head = NodePath("Head_Target/Head")
-HeadTarget = NodePath("Head_Target")
+Spine = NodePath("Spine")
+CrouchHigh = NodePath("CrouchHigh")
+CrouchLow = NodePath("CrouchLow")
+BodyShape_Stand = NodePath("BodyCollisionShape_Stand")
+BodyShape_Crouch = NodePath("BodyCollisionShape_Crouch")
 BaseStepUpSeparationRay = NodePath("StepUpSeparationRay_F")

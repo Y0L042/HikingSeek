@@ -9,17 +9,17 @@ extends CSGBox3D
 var _cur_num_stairs: int = -1
 var _cur_size: Vector3
 
-func make_stairs():
+func make_stairs() -> void:
 	#if not Engine.is_editor_hint():
 		#return
 	#
 	num_stairs = clampi(num_stairs, 0, 999)
 
-	var stairs_poly = $StairsSubtractCSG#add_fresh_stairs_csg_poly()
+	var stairs_poly: CSGPolygon3D = $StairsSubtractCSG#add_fresh_stairs_csg_poly()
 
 	var point_arr : PackedVector2Array = PackedVector2Array()
-	var step_height = self.size.y / num_stairs
-	var step_width = self.size.x / num_stairs
+	var step_height: float = self.size.y / num_stairs
+	var step_width: float = self.size.x / num_stairs
 
 	if num_stairs == 0:
 		# For 0 stairs make a ramp
@@ -28,7 +28,7 @@ func make_stairs():
 		point_arr.append(Vector2(0, 0))
 	else:
 		# Creating the points for the stairs polygon
-		for i in range(num_stairs - 1):
+		for i: int in range(num_stairs - 1):
 			point_arr.append(Vector2(i * step_width, (i + 1) * step_height))
 			if i < num_stairs:
 				point_arr.append(Vector2((i + 1) * step_width, (i + 1) * step_height))
@@ -49,7 +49,7 @@ func make_stairs():
 	_cur_size = self.size
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(_delta: float) -> void:
 	if _cur_num_stairs != num_stairs or _cur_size != self.size:
 		make_stairs()
 "

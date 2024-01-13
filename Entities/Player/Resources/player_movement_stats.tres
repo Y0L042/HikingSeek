@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MovementStatsResource" load_steps=2 format=3 uid="uid://tj62diq6ijdu"]
+
+[ext_resource type="Script" path="res://Utils/Resources/movement_stats_resource.gd" id="1_xje8v"]
+
+[resource]
+script = ExtResource("1_xje8v")
+ground_walk_speed = 5.0
+ground_run_speed = 7.5
+ground_sprint_speed = 10.0
+ground_acceleration = 15.0
+ground_friction = 10.0
+ground_jump_force = 4.5
+air_fall_speed = 19.62
+air_move_speed = 7.0
+air_acceleration = 5.0
+air_friction = 2.5
+gravity_force = 9.81
+gravity_modifier = 1.0

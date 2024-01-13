@@ -1,7 +1,7 @@
 class_name PlayerStateClass
 extends StateClass
 
-var player: CharacterBody3D
+var player: Entity_Player
 #var sm_action_comp: StateMachineActionComponent
 
 func _init(i_node_parent: Variant, i_state_parent: StateClass) -> void:
