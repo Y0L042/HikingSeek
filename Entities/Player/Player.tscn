@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=21 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
 [ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
@@ -17,6 +17,10 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_jump.gd" id="9_iog75"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_crouch.gd" id="12_4t5gy"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair.gd" id="13_r355b"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evhkp"]
+radius = 0.45
+height = 1.165
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_nk36c"]
 length = 0.75
@@ -62,8 +66,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0)
 shape = ExtResource("4_vrbe4")
 disabled = true
 
-[node name="RayCast3D" type="RayCast3D" parent="BodyCollisionShape_Crouch"]
-target_position = Vector3(0, 1.6, 0)
+[node name="ShapeCast3D" type="ShapeCast3D" parent="BodyCollisionShape_Crouch"]
+shape = SubResource("CapsuleShape3D_evhkp")
+target_position = Vector3(0, 1, 0)
 
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -0.5, 0)

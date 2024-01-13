@@ -170,9 +170,14 @@ func enter_crouch() -> void:
 	tween.tween_property(Spine, "position", CrouchLow.position, enter_time).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC)
 
 func test_exit_crouch() -> bool:
-	var uncrouch_ray: RayCast3D = BodyShape_Crouch.get_child(0) as RayCast3D
-	uncrouch_ray.force_raycast_update()
-	if uncrouch_ray.is_colliding():
+	#var uncrouch_ray: RayCast3D = BodyShape_Crouch.get_child(0) as RayCast3D
+	#uncrouch_ray.force_raycast_update()
+	#if uncrouch_ray.is_colliding():
+		#return false
+	#return true
+	var uncrouch_shape: ShapeCast3D = BodyShape_Crouch.get_child(0) as ShapeCast3D
+	uncrouch_shape.force_shapecast_update()
+	if uncrouch_shape.is_colliding():
 		return false
 	return true
 
