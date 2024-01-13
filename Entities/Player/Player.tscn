@@ -1,13 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=15 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
+[ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://Entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
+[ext_resource type="PackedScene" uid="uid://ck7ix6eiplcos" path="res://Utils/StateMachine/state.tscn" id="3_jtqg0"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_onground_idle.gd" id="4_aw57w"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_onground.gd" id="5_i1bfk"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/player_state_class.gd" id="6_rk5f0"]
+[ext_resource type="Script" path="res://Utils/StateMachine/state_inair.gd" id="7_0phby"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_onground_walk.gd" id="7_3ifpr"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_inair_idle.gd" id="8_8qixk"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_onground_sprint.gd" id="8_bvmlt"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_inair_move.gd" id="9_gaje5"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerStateMachine/States/state_onground_jump.gd" id="9_iog75"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ut4ij"]
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_nk36c"]
-length = 0.5
-
-[sub_resource type="LabelSettings" id="LabelSettings_hb8ba"]
+length = 0.75
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Head", "HeadTarget", "BaseStepUpSeparationRay")]
 collision_layer = 2
@@ -16,6 +25,14 @@ Body = NodePath(".")
 Head = NodePath("Head_Target/Head")
 HeadTarget = NodePath("Head_Target")
 BaseStepUpSeparationRay = NodePath("StepUpSeparationRay_F")
+WALK_SPEED = 6.5
+SPRINT_SPEED = 10.0
+JUMP_VELOCITY = 5.5
+JUMP_FRAME_GRACE = 10.0
+BOB_EFFECTS_ENABLED = true
+HEADSPRING = 60.0
+FOV_EFFECTS_ENABLED = true
+FOV_CHANGE = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.005, 0)
@@ -25,31 +42,13 @@ shape = SubResource("CapsuleShape3D_ut4ij")
 target_position = Vector3(0, -0.5, 0)
 
 [node name="StepUpSeparationRay_F" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, -0.553155)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.75, -0.553)
 shape = SubResource("SeparationRayShape3D_nk36c")
 
 [node name="RayCast3D" type="RayCast3D" parent="StepUpSeparationRay_F"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 enabled = false
-target_position = Vector3(0, -0.55, 0)
-
-[node name="StepUpSeparationRay_L" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, -0.553155)
-shape = SubResource("SeparationRayShape3D_nk36c")
-
-[node name="RayCast3D" type="RayCast3D" parent="StepUpSeparationRay_L"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-enabled = false
-target_position = Vector3(0, -0.55, 0)
-
-[node name="StepUpSeparationRay_R" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, -0.553155)
-shape = SubResource("SeparationRayShape3D_nk36c")
-
-[node name="RayCast3D" type="RayCast3D" parent="StepUpSeparationRay_R"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-enabled = false
-target_position = Vector3(0, -0.55, 0)
+target_position = Vector3(0, -0.8, 0)
 
 [node name="Head_Target" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -64,15 +63,32 @@ keep_aspect = 0
 current = true
 fov = 100.0
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
+node_root = NodePath("..")
 
-[node name="Label" type="Label" parent="Control"]
-layout_mode = 0
-offset_right = 197.0
-offset_bottom = 84.0
-text = "is_on_floor: "
-label_settings = SubResource("LabelSettings_hb8ba")
+[node name="PlayerStateClass" parent="PlayerStateMachineHandler" instance=ExtResource("3_jtqg0")]
+script = ExtResource("6_rk5f0")
+
+[node name="OnGround" parent="PlayerStateMachineHandler/PlayerStateClass" instance=ExtResource("3_jtqg0")]
+script = ExtResource("5_i1bfk")
+
+[node name="OnGround_Idle" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("4_aw57w")
+
+[node name="OnGround_Walk" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("7_3ifpr")
+
+[node name="OnGround_Sprint" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("8_bvmlt")
+
+[node name="OnGround_Jump" parent="PlayerStateMachineHandler/PlayerStateClass/OnGround" instance=ExtResource("3_jtqg0")]
+script = ExtResource("9_iog75")
+
+[node name="InAir" parent="PlayerStateMachineHandler/PlayerStateClass" instance=ExtResource("3_jtqg0")]
+script = ExtResource("7_0phby")
+
+[node name="InAir_Idle" parent="PlayerStateMachineHandler/PlayerStateClass/InAir" instance=ExtResource("3_jtqg0")]
+script = ExtResource("8_8qixk")
+
+[node name="InAir_Move" parent="PlayerStateMachineHandler/PlayerStateClass/InAir" instance=ExtResource("3_jtqg0")]
+script = ExtResource("9_gaje5")

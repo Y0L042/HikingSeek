@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://ci8ypgrlrr884"]
+[gd_scene load_steps=14 format=3 uid="uid://ci8ypgrlrr884"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://dctquy0x53884" path="res://Maps/Level_Tutorial/terrain.res" id="1_ih366"]
 [ext_resource type="PackedScene" uid="uid://bixl2bghc80tt" path="res://Entities/Player/Player.tscn" id="2_0d7u7"]
+[ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://Utils/Geometry/CSGStairMaker3D.tscn" id="2_85nke"]
 
 [sub_resource type="Gradient" id="Gradient_n8y6w"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -69,7 +70,6 @@ glow_enabled = true
 storage = ExtResource("1_ih366")
 material = SubResource("Terrain3DMaterial_gicsu")
 texture_list = SubResource("Terrain3DTextureList_adcvj")
-collision_layer = 3
 collision_mask = 0
 
 [node name="CSGBoxes" type="Marker3D" parent="World/Geometry"]
@@ -84,6 +84,14 @@ use_collision = true
 size = Vector3(6.10352, 2.19031, 3.3833)
 material = SubResource("StandardMaterial3D_3xrhh")
 
+[node name="Stairs" type="Marker3D" parent="World/Geometry"]
+
+[node name="CSGStairMaker3D" parent="World/Geometry/Stairs" instance=ExtResource("2_85nke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4532, 0.0542246, -2.40716)
+use_collision = true
+size = Vector3(7.71704, 4.10297, 3.26025)
+num_stairs = 12
+
 [node name="Lighting" type="Marker3D" parent="World"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/Lighting"]
@@ -97,6 +105,9 @@ environment = SubResource("Environment_y5nf1")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Entities"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.579781, 0)
+disable_mode = 2
+collision_layer = 4
+collision_mask = 3
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/RigidBody3D"]
