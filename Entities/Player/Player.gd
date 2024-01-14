@@ -133,6 +133,7 @@ func move(delta: float, i_speed: float, i_accel: float) -> void:
 		_last_frame_was_on_floor = _cur_frame
 	velocity.x = lerp(velocity.x, body_value_move_direction.x * speed, delta * accel)
 	velocity.z = lerp(velocity.z, body_value_move_direction.z * speed, delta * accel)
+	if body_flag_is_crouching: velocity_modifiers_array.append(modify_crouch_speed)
 	velocity = _apply_velocity_modifiers(velocity)
 	_rotate_step_up_separation_ray()
 	if _flag_has_stepped and !Input.is_action_pressed("player_jump"): velocity.y = 0 #Neutralize Y Vel if player just want to get over edge of object

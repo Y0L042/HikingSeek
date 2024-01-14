@@ -185,4 +185,31 @@
 ( 304 -280 168 ) ( 304 -280 169 ) ( 303 -280 168 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 6.123233995736766e-17 0 512 ] [ 0 0 -1 256 ] 0 0.03125 0.03125
 ( 320 -320 152 ) ( 320 -320 153 ) ( 320 -319 152 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 6.123233995736766e-17 1 0 0 ] [ 0 0 -1 256 ] 0 0.03125 0.03125
 }
+// brush 20
+{
+( 112 -448 16 ) ( 112 -447 16 ) ( 112 -448 17 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 112 -464 16 ) ( 112 -464 17 ) ( 113 -464 16 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 1 0 0 -512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 112 -448 16 ) ( 113 -448 16 ) ( 112 -447 16 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 0 0 512 ] [ 0 -1 0 0 ] 0 0.03125 0.03125
+( 144 -416 32 ) ( 144 -415 32 ) ( 145 -416 32 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 1 0 0 -512 ] [ 0 -1 0 0 ] 0 0.03125 0.03125
+( 144 -416 32 ) ( 145 -416 32 ) ( 144 -416 33 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 0 0 512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 288 -416 32 ) ( 288 -416 33 ) ( 288 -415 32 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+}
+// brush 21
+{
+( 176 -432 16 ) ( 176 -431 16 ) ( 176 -432 17 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 0 -1 0 -512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 176 -432 16 ) ( 176 -432 17 ) ( 177 -432 16 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 1 0 0 -512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 176 -432 0 ) ( 177 -432 0 ) ( 176 -431 0 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 0 0 512 ] [ 0 -1 0 -512 ] 0 0.03125 0.03125
+( 208 -400 32 ) ( 208 -399 32 ) ( 209 -400 32 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 1 0 0 -512 ] [ 0 -1 0 -512 ] 0 0.03125 0.03125
+( 208 -416 32 ) ( 209 -416 32 ) ( 208 -416 33 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 0 0 512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 288 -400 32 ) ( 288 -400 33 ) ( 288 -399 32 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 0 1 0 512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+}
+// brush 22
+{
+( 176 -464 16 ) ( 176 -463 16 ) ( 176 -464 17 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 0 -1 0 -512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 176 -464 16 ) ( 176 -464 17 ) ( 177 -464 16 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 1 0 0 -512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 176 -464 0 ) ( 177 -464 0 ) ( 176 -463 0 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 0 0 512 ] [ 0 -1 0 -512 ] 0 0.03125 0.03125
+( 208 -432 32 ) ( 208 -431 32 ) ( 209 -432 32 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 1 0 0 -512 ] [ 0 -1 0 -512 ] 0 0.03125 0.03125
+( 208 -448 32 ) ( 209 -448 32 ) ( 208 -448 33 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ -1 0 0 512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+( 288 -432 32 ) ( 288 -432 33 ) ( 288 -431 32 ) Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_03 [ 0 1 0 512 ] [ 0 0 -1 0 ] 0 0.03125 0.03125
+}
 }
