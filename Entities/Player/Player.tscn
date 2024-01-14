@@ -45,16 +45,18 @@ func _unhandled_input(_event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 "
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "BaseStepUpSeparationRay")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "Head", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "BaseStepUpSeparationRay", "VaultRay")]
 collision_layer = 2
 script = ExtResource("1_s7lkf")
 Body = NodePath(".")
 Spine = NodePath("Spine")
+Head = NodePath("Spine/Head")
 CrouchHigh = NodePath("CrouchHigh")
 CrouchLow = NodePath("CrouchLow")
 BodyShape_Stand = NodePath("BodyCollisionShape_Stand")
 BodyShape_Crouch = NodePath("BodyCollisionShape_Crouch")
 BaseStepUpSeparationRay = NodePath("StepUpSeparationRay_F")
+VaultRay = NodePath("VaultRay")
 MOVE_STATS = ExtResource("2_ytm56")
 
 [node name="BodyCollisionShape_Stand" type="CollisionShape3D" parent="."]
@@ -71,6 +73,10 @@ shape = SubResource("CapsuleShape3D_evhkp")
 target_position = Vector3(0, 1.375, 0)
 
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.5, 0)
+
+[node name="VaultRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.65)
 target_position = Vector3(0, -0.5, 0)
 
 [node name="StepUpSeparationRay_F" type="CollisionShape3D" parent="."]

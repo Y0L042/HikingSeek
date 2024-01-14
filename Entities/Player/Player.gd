@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export_group("Node References")
 @export var Body: CharacterBody3D
 @export var Spine: Node3D
+@export var Head: Node3D
 @export var CrouchHigh: Node3D
 @export var CrouchLow: Node3D
 @export var BodyShape_Stand: CollisionShape3D
@@ -11,6 +12,7 @@ extends CharacterBody3D
 @export_subgroup("Raycast Node References")
 @export var STEP_UP_RAY_COUNT: float = 8
 @export var BaseStepUpSeparationRay: CollisionShape3D
+@export var VaultRay: RayCast3D
 
 @export_group("Character Settings")
 @export_subgroup("Movement")
@@ -130,7 +132,7 @@ func move(delta: float, i_speed: float, i_accel: float) -> void:
 	velocity.z = lerp(velocity.z, body_value_move_direction.z * speed, delta * accel)
 	velocity = _apply_velocity_modifiers(velocity)
 	_rotate_step_up_separation_ray()
-	if _flag_has_stepped and !Input.is_action_pressed("player_jump"): velocity.y = 0
+	if _flag_has_stepped and !Input.is_action_pressed("player_jump"): velocity.y = 0 #Neutralize Y Vel if player just want to get over edge of object
 	move_and_slide()
 	_snap_down_to_stairs_check()
 	_flag_has_stepped = abs(get_real_velocity().y - velocity.y) > step_vel_threshold
@@ -147,10 +149,12 @@ func is_on_ground() -> bool:
 	return (is_on_floor() or _was_on_floor_last_frame)
 
 func execute_actions() -> void:
-	_check_crouch()
-	jump()
+	if Input.is_action_pressed("player_crouch"): crouch()
+	if Input.is_action_just_pressed("player_jump"):
+		if !vault():
+			jump()
 
-func _check_crouch() -> void:
+func crouch() -> void:
 	if input_flag_crouch:
 		if !body_flag_is_crouching:
 			enter_crouch()
@@ -195,3 +199,18 @@ func exit_crouch() -> void:
 		return
 	var tween: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_property(Spine, "position", CrouchHigh.position, exit_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+
+func vault() -> bool:
+	VaultRay.force_raycast_update()
+	if VaultRay.is_colliding():
+		var y_time: float = 0.75
+		var xz_time: float = 0.35
+		#var vault_dist_sqrd: float = global_position.distance_squared_to(VaultRay.get_collision_point())
+		#var vault_time_mod: float = vault_dist_sqrd / (Head.position.y*Head.position.y) #player height
+		var tween_y: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+		tween_y.tween_property(self, "global_position:y", VaultRay.get_collision_point().y, y_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+		var tween_x: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+		tween_x.tween_property(self, "global_position:x", VaultRay.get_collision_point().x, xz_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+		var tween_z: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+		tween_z.tween_property(self, "global_position:z", VaultRay.get_collision_point().z, xz_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+	return VaultRay.is_colliding()
