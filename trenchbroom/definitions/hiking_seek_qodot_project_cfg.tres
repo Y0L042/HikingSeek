@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="QodotProjectConfig" load_steps=2 format=3 uid="uid://cilhk7ax1oeui"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/util/qodot_project_config.gd" id="1_hjj8c"]
+
+[resource]
+script = ExtResource("1_hjj8c")
+export_qodot_settings = false

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=5 format=3 uid="uid://c772dqo3hkigk"]
+
+[ext_resource type="Resource" uid="uid://dk1to1710w1gr" path="res://trenchbroom/definitions/classes/brush_classes/mechanism_door.tres" id="1_3lygg"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_dibco"]
+[ext_resource type="Resource" uid="uid://hrk5g70lwkbf" path="res://trenchbroom/definitions/classes/brush_classes/trigger_mechanism.tres" id="2_84ety"]
+[ext_resource type="Resource" uid="uid://cqmldwbrfccao" path="res://trenchbroom/definitions/classes/brush_classes/trigger_solid_class.tres" id="3_vrrbf"]
+
+[resource]
+script = ExtResource("1_dibco")
+export_file = false
+target_folder = ""
+fgd_name = "brush_fgd"
+base_fgd_files = Array[Resource]([])
+entity_definitions = Array[Resource]([ExtResource("1_3lygg"), ExtResource("2_84ety"), ExtResource("3_vrrbf")])

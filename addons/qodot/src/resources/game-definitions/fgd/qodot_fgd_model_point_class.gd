@@ -8,6 +8,8 @@ extends QodotFGDPointClass
 @export var trenchbroom_models_folder := ""
 ## Scale expression applied to model in Trenchbroom. See https://trenchbroom.github.io/manual/latest/#display-models-for-entities for more info.
 @export var scale_expression := ""
+## Y0L042 Modification
+@export var generate_model: bool = true
 ## Model Point Class can override the 'size' meta property by auto-generating a value from the meshes' AABB. Proper generation requires 'scale_expression' set to a float or Vector3.
 ## WARNING: Generated size property unlikely to align cleanly to grid!
 @export var generate_size_property := false
@@ -21,8 +23,8 @@ func build_def_text() -> String:
 
 func _generate_model():
 	if not scene_file:
-		return 
-	
+		return
+
 	var gltf_state := GLTFState.new()
 	var path = _get_export_dir()
 	var node = _get_node()
@@ -37,7 +39,7 @@ func _generate_model():
 		meta_properties[model_key] = '"%s"' % _get_local_path()
 	else:
 		meta_properties[model_key] = '{"path": "%s", "scale": %s }' % [
-			_get_local_path(), 
+			_get_local_path(),
 			scale_expression
 		]
 	if generate_size_property:
@@ -59,8 +61,8 @@ func _get_local_path() -> String:
 	return _get_model_folder().path_join('%s.glb' % classname)
 
 func _get_model_folder() -> String:
-	return (QodotProjectConfig.get_setting(QodotProjectConfig.PROPERTY.TRENCHBROOM_MODELS_FOLDER) 
-		if trenchbroom_models_folder.is_empty() 
+	return (QodotProjectConfig.get_setting(QodotProjectConfig.PROPERTY.TRENCHBROOM_MODELS_FOLDER)
+		if trenchbroom_models_folder.is_empty()
 		else trenchbroom_models_folder)
 
 func _get_working_folder() -> String:
@@ -69,7 +71,10 @@ func _get_working_folder() -> String:
 		else trenchbroom_working_folder)
 
 func _create_gltf_file(gltf_state: GLTFState, path: String, node: Node3D, create_ignore_files: bool) -> bool:
-	var error := 0 
+	if !generate_model:
+		printerr("Y0L042 did not want our model :,( .")
+		return generate_model   # Y0L042 Modification
+	var error := 0
 	var global_export_path = path
 	var gltf_document := GLTFDocument.new()
 	gltf_state.create_animations = false
@@ -87,14 +92,14 @@ func _save_to_file_system(gltf_document: GLTFDocument, gltf_state: GLTFState, pa
 	error = DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 	if error != OK:
 		printerr("Failed creating dir", error)
-		return 
+		return
 
 	if create_ignore_files: _create_ignore_files(path.get_base_dir())
 
 	error = gltf_document.write_to_filesystem(gltf_state, path)
 	if error != OK:
 		printerr("Failed writing to file system", error)
-		return 
+		return
 	print('exported model ', path)
 
 func _create_ignore_files(path: String):
@@ -126,7 +131,7 @@ func _generate_size_from_aabb(meshes: Array[GLTFMesh]) -> AABB:
 			scale_factor *= Vector3(scale_arr[0], scale_arr[1], scale_arr[2])
 	elif scale_expression.to_float() > 0:
 		scale_factor *= scale_expression.to_float()
-	
+
 	size_prop.position *= scale_factor
 	size_prop.size *= scale_factor
 	size_prop.size += size_prop.position

@@ -160,7 +160,7 @@ func create_material(
 		material.set_shader_parameter(default_material_albedo_uniform, texture)
 
 	var pbr_textures : Dictionary = get_pbr_textures(texture_name)
-	
+
 	for pbr_suffix in PBRSuffix.values():
 		var suffix = pbr_suffix
 		var tex = pbr_textures[suffix]
@@ -168,7 +168,7 @@ func create_material(
 			if material is ShaderMaterial:
 				material = StandardMaterial3D.new()
 				material.set_texture(StandardMaterial3D.TEXTURE_ALBEDO, texture)
-			
+
 			var enable_prop : String = PBR_SUFFIX_PROPERTIES[suffix] if suffix in PBR_SUFFIX_PROPERTIES else ""
 			if(enable_prop != ""):
 				material.set(enable_prop, true)

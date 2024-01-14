@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="HikingSeek"
-run/main_scene="res://Maps/Level_Tutorial/level_tutorial.tscn"
-config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+run/main_scene="res://Maps/Map_1/map_1.tscn"
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -32,6 +32,16 @@ project/assembly_name="HikingSeek"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/qodot/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Maps/": "orange",
+"res://Utils/": "gray",
+"res://addons/": "gray",
+"res://entities/": "pink",
+"res://trenchbroom/": "red"
+}
 
 [input]
 
@@ -70,3 +80,7 @@ player_crouch={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194326,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
+
+[rendering]
+
+occlusion_culling/use_occlusion_culling=true

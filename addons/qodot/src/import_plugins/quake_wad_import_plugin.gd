@@ -46,13 +46,13 @@ func _get_import_options(path, preset) -> Array[Dictionary]:
 
 func _get_preset_count() -> int:
 	return 0
-	
+
 func _get_import_order() -> int:
 	return 0
-	
+
 func _get_priority() -> float:
 	return 1.0
-	
+
 func _import(source_file, save_path, options, r_platform_variants, r_gen_files) -> Error:
 	var save_path_str : String = '%s.%s' % [save_path, _get_save_extension()]
 
@@ -144,7 +144,7 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files) 
 		var texture_image := Image.create_from_data(width, height, false, Image.FORMAT_RGB8, pixels_rgb)
 		if options["generate_mipmaps"] == true:
 			texture_image.generate_mipmaps()
-		
+
 		var texture := ImageTexture.create_from_image(texture_image) #,Texture2D.FLAG_MIPMAPS | Texture2D.FLAG_REPEAT | Texture2D.FLAG_ANISOTROPIC_FILTER
 
 		textures[name] = texture

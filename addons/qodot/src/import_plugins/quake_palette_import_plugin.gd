@@ -27,13 +27,13 @@ func _get_preset_count() -> int:
 
 func _get_priority():
 	return 1.0
-	
+
 func _get_import_order():
 	return 0
 
 func _import(source_file, save_path, options, r_platform_variants, r_gen_files) -> Error:
 	var save_path_str : String = '%s.%s' % [save_path, _get_save_extension()]
-	
+
 	var file = FileAccess.open(source_file, FileAccess.READ)
 	if file == null:
 		var err = FileAccess.get_open_error()

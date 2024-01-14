@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=5 format=3 uid="uid://15n48qwntjcj"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_juooq"]
+[ext_resource type="Resource" uid="uid://vf7h6bd8jfd3" path="res://trenchbroom/definitions/classes/base_classes/qodot_entity_base_class.tres" id="1_y1v1g"]
+[ext_resource type="Resource" path="res://trenchbroom/definitions/classes/base_classes/qodot_receiver_base_class.tres" id="2_xrwsc"]
+[ext_resource type="Resource" uid="uid://dbipqr8vkjoxs" path="res://trenchbroom/definitions/classes/base_classes/qodot_trigger_base_class.tres" id="3_hwwq3"]
+
+[resource]
+script = ExtResource("1_juooq")
+export_file = false
+target_folder = ""
+fgd_name = "base_fgd"
+base_fgd_files = Array[Resource]([])
+entity_definitions = Array[Resource]([ExtResource("1_y1v1g"), ExtResource("2_xrwsc"), ExtResource("3_hwwq3")])

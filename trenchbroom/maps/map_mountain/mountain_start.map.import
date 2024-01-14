@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://cububd4d163ev"
+path="res://.godot/imported/mountain_start.map-130c48ec4aec587f9c67da09234e12e2.tres"
+
+[deps]
+
+source_file="res://trenchbroom/maps/map_mountain/mountain_start.map"
+dest_files=["res://.godot/imported/mountain_start.map-130c48ec4aec587f9c67da09234e12e2.tres"]
+
+[params]
+

@@ -19,8 +19,8 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair.gd" id="13_r355b"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evhkp"]
-radius = 0.45
-height = 1.165
+radius = 0.225
+height = 0.45
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_nk36c"]
 length = 0.75
@@ -68,7 +68,7 @@ disabled = true
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="BodyCollisionShape_Crouch"]
 shape = SubResource("CapsuleShape3D_evhkp")
-target_position = Vector3(0, 1, 0)
+target_position = Vector3(0, 1.375, 0)
 
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -0.5, 0)

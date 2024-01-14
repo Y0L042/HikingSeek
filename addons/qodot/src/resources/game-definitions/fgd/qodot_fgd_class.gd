@@ -50,7 +50,7 @@ func build_def_text() -> String:
 		if self is QodotFGDSolidClass:
 			if prop == "size" or prop == "model":
 				continue
-		
+
 		var value = meta_props[prop]
 		res += " " + prop + "("
 

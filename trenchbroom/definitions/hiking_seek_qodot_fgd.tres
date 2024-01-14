@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=12 format=3 uid="uid://u3i6hf2gxaak"]
+
+[ext_resource type="Resource" uid="uid://c6c7ca1bms133" path="res://addons/qodot/game_definitions/fgd/demo_entities_fgd.tres" id="1_itpn0"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_teegl"]
+[ext_resource type="Resource" uid="uid://dtrwmwppklvpw" path="res://addons/qodot/game_definitions/fgd/essentials_fgd.tres" id="2_j4oub"]
+[ext_resource type="Resource" uid="uid://c36hv0o6g0udo" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="3_7ivwm"]
+[ext_resource type="Resource" uid="uid://blnk7qwd7u1ls" path="res://addons/qodot/game_definitions/fgd/quake_compat_fgd.tres" id="4_7b66d"]
+[ext_resource type="Resource" uid="uid://bkmh5qlqkolvt" path="res://addons/qodot/game_definitions/fgd/receiver_signal_fgd.tres" id="5_tw24w"]
+[ext_resource type="Resource" uid="uid://bkmh5qlqkolvt" path="res://addons/qodot/game_definitions/fgd/reciever_signal_fgd.tres" id="6_8usvr"]
+[ext_resource type="Resource" uid="uid://ccwosedfa8v8d" path="res://addons/qodot/game_definitions/fgd/point_classes/light_point_class.tres" id="7_el4ph"]
+[ext_resource type="Resource" uid="uid://15n48qwntjcj" path="res://trenchbroom/definitions/base_fgd.tres" id="7_xde67"]
+[ext_resource type="Resource" uid="uid://c772dqo3hkigk" path="res://trenchbroom/definitions/brush_fgd.tres" id="8_fk3ru"]
+[ext_resource type="Resource" uid="uid://cb4va3nt0lkpx" path="res://trenchbroom/definitions/point_fgd.tres" id="9_ghopx"]
+
+[resource]
+script = ExtResource("1_teegl")
+export_file = false
+target_folder = ""
+fgd_name = "HikingSeek_Qodot"
+base_fgd_files = Array[Resource]([ExtResource("1_itpn0"), ExtResource("2_j4oub"), ExtResource("3_7ivwm"), ExtResource("4_7b66d"), ExtResource("5_tw24w"), ExtResource("6_8usvr"), ExtResource("7_xde67"), ExtResource("8_fk3ru"), ExtResource("9_ghopx")])
+entity_definitions = Array[Resource]([ExtResource("7_el4ph")])

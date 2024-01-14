@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=3 format=3 uid="uid://hrk5g70lwkbf"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_ipv1l"]
+[ext_resource type="Script" path="res://trenchbroom/definitions/classes/brush_classes/trigger_mechanism.gd" id="2_ak4ma"]
+
+[resource]
+script = ExtResource("1_ipv1l")
+spawn_type = 2
+build_visuals = false
+use_in_baked_light = true
+shadow_casting_setting = 0
+build_occlusion = false
+render_layers = 0
+collision_shape_type = 1
+collision_layer = 0
+collision_mask = 6
+collision_priority = 1.0
+collision_shape_margin = 0.04
+script_class = ExtResource("2_ak4ma")
+classname = "trigger_mechanism"
+description = "A Trigger for a Mechanism."
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"target": ""
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+transient_node = false

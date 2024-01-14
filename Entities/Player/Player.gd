@@ -67,6 +67,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	input_flag_jump = Input.is_action_just_pressed("player_jump")
 	input_flag_sprint = Input.is_action_pressed("player_sprint")
 
+	execute_actions()
+
 func _snap_down_to_stairs_check() -> void:
 	var did_snap: bool = false
 	if not is_on_floor() and velocity.y <= 0 and (_was_on_floor_last_frame or _snapped_to_stairs_last_frame) and $StairsBelowRayCast3D.is_colliding():
@@ -112,22 +114,6 @@ func _rotate_step_up_separation_ray() -> void:
 	for ray: CollisionShape3D in stepup_ray_list:
 		ray.disabled = any_too_steep
 
-func _check_crouch() -> void:
-	if input_flag_crouch:
-		if !body_flag_is_crouching:
-			enter_crouch()
-			body_flag_is_crouching = true
-		velocity_modifiers_array.append(modify_crouch_speed)
-	else:
-		if test_exit_crouch():
-			exit_crouch()
-			body_flag_is_crouching = false
-
-func modify_crouch_speed(i_velocity: Vector3) -> Vector3:
-	var xz_vel: Vector3 = i_velocity * Vector3(1, 0 ,1)
-	xz_vel = xz_vel.limit_length(MOVE_STATS.ground_walk_speed)
-	return Vector3(xz_vel.x, i_velocity.y, xz_vel.z)
-
 func _apply_velocity_modifiers(i_velocity: Vector3) -> Vector3:
 	for modifier: Callable in velocity_modifiers_array:
 		i_velocity = modifier.call(i_velocity)
@@ -140,8 +126,6 @@ func move(delta: float, i_speed: float, i_accel: float) -> void:
 	_cur_frame += 1
 	if is_on_floor():
 		_last_frame_was_on_floor = _cur_frame
-	jump()
-	_check_crouch()
 	velocity.x = lerp(velocity.x, body_value_move_direction.x * speed, delta * accel)
 	velocity.z = lerp(velocity.z, body_value_move_direction.z * speed, delta * accel)
 	velocity = _apply_velocity_modifiers(velocity)
@@ -162,21 +146,41 @@ func is_on_ground() -> bool:
 	#return (is_on_floor() or _cur_frame - _last_frame_was_on_floor <= JUMP_FRAME_GRACE)
 	return (is_on_floor() or _was_on_floor_last_frame)
 
+func execute_actions() -> void:
+	_check_crouch()
+	jump()
+
+func _check_crouch() -> void:
+	if input_flag_crouch:
+		if !body_flag_is_crouching:
+			enter_crouch()
+			body_flag_is_crouching = true
+		velocity_modifiers_array.append(modify_crouch_speed)
+	else:
+		if body_flag_is_crouching and test_exit_crouch():
+			exit_crouch()
+			body_flag_is_crouching = false
+
+func modify_crouch_speed(i_velocity: Vector3) -> Vector3:
+	var xz_vel: Vector3 = i_velocity * Vector3(1, 0 ,1)
+	xz_vel = xz_vel.limit_length(MOVE_STATS.ground_walk_speed)
+	return Vector3(xz_vel.x, i_velocity.y, xz_vel.z)
+
 func enter_crouch() -> void:
 	var enter_time: float = 0.125
 	BodyShape_Stand.disabled = true
 	BodyShape_Crouch.disabled = false
+	if !is_on_ground():
+		global_position.y += CrouchHigh.position.y - CrouchLow.position.y
+		Spine.position = CrouchLow.position
+		return
 	var tween: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_property(Spine, "position", CrouchLow.position, enter_time).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CIRC)
 
 func test_exit_crouch() -> bool:
-	#var uncrouch_ray: RayCast3D = BodyShape_Crouch.get_child(0) as RayCast3D
-	#uncrouch_ray.force_raycast_update()
-	#if uncrouch_ray.is_colliding():
-		#return false
-	#return true
 	var uncrouch_shape: ShapeCast3D = BodyShape_Crouch.get_child(0) as ShapeCast3D
 	uncrouch_shape.force_shapecast_update()
+	print("Can uncrouch? : ", !uncrouch_shape.is_colliding())
 	if uncrouch_shape.is_colliding():
 		return false
 	return true
@@ -185,5 +189,9 @@ func exit_crouch() -> void:
 	var exit_time: float = 0.15
 	BodyShape_Stand.disabled = false
 	BodyShape_Crouch.disabled = true
+	if !is_on_ground():
+		global_position.y -= CrouchHigh.position.y - CrouchLow.position.y
+		Spine.position = CrouchHigh.position
+		return
 	var tween: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	tween.tween_property(Spine, "position", CrouchHigh.position, exit_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)

@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=2 format=3 uid="uid://dk1to1710w1gr"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_8lp1x"]
+
+[resource]
+script = ExtResource("1_8lp1x")
+spawn_type = 2
+build_visuals = true
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 1
+collision_mask = 1
+collision_priority = 1.0
+collision_shape_margin = 0.04
+classname = "mechanism_door_door"
+description = "A door that slides."
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"auto_close": 1,
+"auto_close_timer": 5.0,
+"open_on_collision": 0,
+"rotation": Vector3(0, 0, 0),
+"speed": 1.0,
+"targetname": "",
+"translation": Vector3(0, 3, 0)
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "CharacterBody3D"
+transient_node = false

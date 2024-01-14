@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QodotFGDBaseClass" load_steps=2 format=3 uid="uid://vf7h6bd8jfd3"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_base_class.gd" id="1_b7xhx"]
+
+[resource]
+script = ExtResource("1_b7xhx")
+classname = "entity_base_class"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"rotation": Vector3(0, 0, 0),
+"scale": 1.0
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
