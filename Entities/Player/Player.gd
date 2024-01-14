@@ -150,8 +150,14 @@ func is_on_ground() -> bool:
 
 func execute_actions() -> void:
 	if Input.is_action_pressed("player_crouch"): crouch()
+	var has_vaulted: bool
+	# If player is holding jump and moving forward, vault. If they vaulted, don't jump.
+	# If the player just tapped jump, or is not moving forward, don't vault, jump.
+	if Input.is_action_pressed('player_jump'):
+		if input_value_move_dir.y < 0:
+			has_vaulted = vault()
 	if Input.is_action_just_pressed("player_jump"):
-		if !vault():
+		if !has_vaulted and is_on_ground():
 			jump()
 
 func crouch() -> void:
@@ -203,14 +209,15 @@ func exit_crouch() -> void:
 func vault() -> bool:
 	VaultRay.force_raycast_update()
 	if VaultRay.is_colliding():
-		var y_time: float = 0.75
-		var xz_time: float = 0.35
+		var y_time: float = 0.85
+		var xz_time: float = 0.55
 		#var vault_dist_sqrd: float = global_position.distance_squared_to(VaultRay.get_collision_point())
 		#var vault_time_mod: float = vault_dist_sqrd / (Head.position.y*Head.position.y) #player height
 		var tween_y: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-		tween_y.tween_property(self, "global_position:y", VaultRay.get_collision_point().y, y_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+		tween_y.tween_property(self, "global_position:y", VaultRay.get_collision_point().y, y_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 		var tween_x: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-		tween_x.tween_property(self, "global_position:x", VaultRay.get_collision_point().x, xz_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+		tween_x.tween_property(self, "global_position:x", VaultRay.get_collision_point().x, xz_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 		var tween_z: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-		tween_z.tween_property(self, "global_position:z", VaultRay.get_collision_point().z, xz_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
-	return VaultRay.is_colliding()
+		tween_z.tween_property(self, "global_position:z", VaultRay.get_collision_point().z, xz_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
+		return true
+	return false
