@@ -1,3 +1,4 @@
 [gd_resource type="CapsuleShape3D" format=3 uid="uid://d1kjh45ym8m2c"]
 
 [resource]
+radius = 0.35

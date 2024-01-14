@@ -12,6 +12,7 @@ extends CharacterBody3D
 @export_subgroup("Raycast Node References")
 @export var STEP_UP_RAY_COUNT: float = 8
 @export var BaseStepUpSeparationRay: CollisionShape3D
+@export var StairBelowRay: RayCast3D
 @export var VaultRay: RayCast3D
 
 @export_group("Character Settings")
@@ -25,9 +26,10 @@ extends CharacterBody3D
 var input_flag_is_moving: bool
 var input_flag_sprint: bool
 var input_flag_jump: bool
-@export var input_flag_crouch: bool
+var input_flag_crouch: bool
 var input_value_move_dir: Vector2
-@export var body_flag_is_crouching: bool = false
+var body_flag_is_crouching: bool = false
+var body_flag_is_vaulting: bool = false
 var body_flag_on_ground: bool:
 	get:
 		return is_on_ground()
@@ -73,10 +75,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _snap_down_to_stairs_check() -> void:
 	var did_snap: bool = false
-	if not is_on_floor() and velocity.y <= 0 and (_was_on_floor_last_frame or _snapped_to_stairs_last_frame) and $StairsBelowRayCast3D.is_colliding():
+	if  !is_on_floor() and velocity.y <= 0 and (_was_on_floor_last_frame or _snapped_to_stairs_last_frame) and StairBelowRay.is_colliding():
 		var body_test_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
 		var params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
-		var max_step_down: float = -0.5
+		#var max_step_down: float = -0.5
+		var max_step_down: float = StairBelowRay.target_position.y
 		params.from = self.global_transform
 		params.motion = Vector3(0,max_step_down,0)
 		if PhysicsServer3D.body_test_motion(self.get_rid(), params, body_test_result):
@@ -154,10 +157,11 @@ func execute_actions() -> void:
 	# If player is holding jump and moving forward, vault. If they vaulted, don't jump.
 	# If the player just tapped jump, or is not moving forward, don't vault, jump.
 	if Input.is_action_pressed('player_jump'):
-		if input_value_move_dir.y < 0:
-			has_vaulted = vault()
+		if !body_flag_is_crouching and !body_flag_is_vaulting:
+			if input_value_move_dir.y < 0:
+				has_vaulted = vault()
 	if Input.is_action_just_pressed("player_jump"):
-		if !has_vaulted and is_on_ground():
+		if !has_vaulted:
 			jump()
 
 func crouch() -> void:
@@ -209,12 +213,12 @@ func exit_crouch() -> void:
 func vault() -> bool:
 	VaultRay.force_raycast_update()
 	if VaultRay.is_colliding():
+		body_flag_is_vaulting = true
 		var y_time: float = 0.85
 		var xz_time: float = 0.55
-		#var vault_dist_sqrd: float = global_position.distance_squared_to(VaultRay.get_collision_point())
-		#var vault_time_mod: float = vault_dist_sqrd / (Head.position.y*Head.position.y) #player height
 		var tween_y: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tween_y.tween_property(self, "global_position:y", VaultRay.get_collision_point().y, y_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
+		tween_y.tween_callback((func() -> void: body_flag_is_vaulting = false))
 		var tween_x: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tween_x.tween_property(self, "global_position:x", VaultRay.get_collision_point().x, xz_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 		var tween_z: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
