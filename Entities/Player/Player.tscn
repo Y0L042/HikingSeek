@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=22 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
 [ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
@@ -17,6 +17,9 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_jump.gd" id="9_iog75"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_crouch.gd" id="12_4t5gy"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair.gd" id="13_r355b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nxaro"]
+radius = 0.325
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evhkp"]
 radius = 0.225
@@ -61,8 +64,12 @@ VaultRay = NodePath("VaultRay")
 MOVE_STATS = ExtResource("2_ytm56")
 JUMP_FRAME_GRACE = 6.0
 
+[node name="GroundTest" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.325, 0)
+shape = SubResource("SphereShape3D_nxaro")
+
 [node name="BodyCollisionShape_Stand" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.005, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3744, 0)
 shape = ExtResource("3_nkcvc")
 
 [node name="BodyCollisionShape_Crouch" type="CollisionShape3D" parent="."]
@@ -72,23 +79,23 @@ disabled = true
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="BodyCollisionShape_Crouch"]
 shape = SubResource("CapsuleShape3D_evhkp")
-target_position = Vector3(0, 1.375, 0)
+target_position = Vector3(0, 1.235, 0)
 
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(0, -1.01, 0)
+target_position = Vector3(0, -0.55, 0)
 
 [node name="VaultRay" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.4)
+transform = Transform3D(1, 0, 0, 0, 0.999848, -0.0174524, 0, 0.0174524, 0.999848, 0, 2.1, -0.425)
 target_position = Vector3(0, -0.75, 0)
 
 [node name="StepUpSeparationRay_F" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.75, -0.365)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.75, -0.355)
 shape = SubResource("SeparationRayShape3D_nk36c")
 
 [node name="RayCast3D" type="RayCast3D" parent="StepUpSeparationRay_F"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.0174524, 0.999848, 0, -0.999848, 0.0174524, 0, 0, 0)
 enabled = false
-target_position = Vector3(0, -0.8, 0)
+target_position = Vector3(0, -0.795, 0)
 
 [node name="CrouchHigh" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)

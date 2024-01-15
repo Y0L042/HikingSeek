@@ -214,6 +214,9 @@ func exit_crouch() -> void:
 func vault() -> bool:
 	VaultRay.force_raycast_update()
 	if VaultRay.is_colliding():
+		var ray_normal: Vector3 = VaultRay.get_collision_normal()
+		if ray_normal.dot(Vector3(0, 1, 0)) < sin(deg_to_rad(MAX_SLOPE_ANG)):
+			return false
 		body_flag_is_vaulting = true
 		var y_time: float = 0.85
 		var xz_time: float = 0.55

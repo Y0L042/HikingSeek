@@ -25,13 +25,17 @@ gdscript/warnings/unused_parameter=0
 gdscript/warnings/untyped_declaration=1
 gdscript/warnings/inferred_declaration=1
 
+[display]
+
+window/vsync/vsync_mode=2
+
 [dotnet]
 
 project/assembly_name="HikingSeek"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/qodot/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/tabby_explorer/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [file_customization]
 
