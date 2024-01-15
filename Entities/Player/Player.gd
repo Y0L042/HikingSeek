@@ -14,6 +14,7 @@ extends CharacterBody3D
 @export var BaseStepUpSeparationRay: CollisionShape3D
 @export var StairBelowRay: RayCast3D
 @export var VaultRay: RayCast3D
+@export var VaultShapeCast: ShapeCast3D
 
 @export_group("Character Settings")
 @export_subgroup("Movement")
@@ -133,7 +134,7 @@ func move(delta: float, i_speed: float, i_accel: float) -> void:
 		_last_frame_was_on_floor = _cur_frame
 	velocity.x = lerp(velocity.x, body_value_move_direction.x * speed, delta * accel)
 	velocity.z = lerp(velocity.z, body_value_move_direction.z * speed, delta * accel)
-	if body_flag_is_crouching: velocity_modifiers_array.append(modify_crouch_speed)
+	if body_flag_is_crouching and is_on_ground(): velocity_modifiers_array.append(modify_crouch_speed)
 	velocity = _apply_velocity_modifiers(velocity)
 	_rotate_step_up_separation_ray()
 	if _flag_has_stepped and !Input.is_action_pressed("player_jump"): velocity.y = 0 #Neutralize Y Vel if player just want to get over edge of object
@@ -170,7 +171,7 @@ func crouch() -> void:
 		if !body_flag_is_crouching:
 			enter_crouch()
 			body_flag_is_crouching = true
-		velocity_modifiers_array.append(modify_crouch_speed)
+		#velocity_modifiers_array.append(modify_crouch_speed)
 	else:
 		if body_flag_is_crouching and test_exit_crouch():
 			exit_crouch()
@@ -216,7 +217,14 @@ func vault() -> bool:
 	if VaultRay.is_colliding():
 		var ray_normal: Vector3 = VaultRay.get_collision_normal()
 		if ray_normal.dot(Vector3(0, 1, 0)) < sin(deg_to_rad(MAX_SLOPE_ANG)):
+			DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.FIREBRICK, 30) # HACK
 			return false
+		VaultShapeCast.global_position = VaultRay.get_collision_point() + Vector3.UP * VaultShapeCast.shape.height/2 + Vector3(0, 0.01, 0)
+		VaultShapeCast.force_shapecast_update()
+		if VaultShapeCast.is_colliding():
+			DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.WEB_MAROON, 30) # HACK
+			return false
+		DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.CHARTREUSE, 30) # HACK
 		body_flag_is_vaulting = true
 		var y_time: float = 0.85
 		var xz_time: float = 0.55
