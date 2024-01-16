@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground.gd" id="5_i1bfk"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/player_state_class.gd" id="6_rk5f0"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_walk.gd" id="7_3ifpr"]
+[ext_resource type="PackedScene" uid="uid://de24xyfl10kgy" path="res://UI/HUD/Crosshairs/crosshair.tscn" id="7_b3c7t"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair_idle.gd" id="8_8qixk"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_sprint.gd" id="8_bvmlt"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair_move.gd" id="9_gaje5"]
@@ -54,12 +55,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 "
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_7svkh"]
-height = 0.25
-
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "Head", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "Interact_Raycast", "Pickup_Container", "BaseStepUpSeparationRay", "StairBelowRay", "VaultRay", "VaultShapeCast")]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 13
 script = ExtResource("1_s7lkf")
 Body = NodePath(".")
 Spine = NodePath("Spine")
@@ -152,6 +150,9 @@ collision_mask = 15
 debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
 debug_shape_thickness = 1
 
+[node name="Crosshair" parent="Spine/Head/SimpleFPSCamera" instance=ExtResource("7_b3c7t")]
+crosshair_color = Color(0.501961, 0.501961, 0.501961, 1)
+
 [node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
 node_root = NodePath("..")
 
@@ -190,7 +191,3 @@ script = ExtResource("18_q70x2")
 
 [node name="MouseCaptureDebug" type="Node" parent="."]
 script = SubResource("GDScript_ocyux")
-
-[node name="InteractibleCollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("CylinderShape3D_7svkh")

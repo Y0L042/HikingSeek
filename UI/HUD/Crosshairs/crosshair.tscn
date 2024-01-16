@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://de24xyfl10kgy"]
+
+[ext_resource type="Script" path="res://UI/HUD/Crosshairs/crosshair.gd" id="1_w62iv"]
+
+[node name="Crosshair" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_w62iv")
+crosshair_color = Color(0.317647, 0.388235, 0.458824, 1)
+crosshair_scale = 0.75
+crosshair_spread = 15.0
+croshair_thickness = 2.0
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LinesRoot" type="Node2D" parent="Root"]
+unique_name_in_owner = true
+scale = Vector2(0.5, 0.5)
+
+[node name="Line2D_1" type="Line2D" parent="Root/LinesRoot"]
+position = Vector2(28.86, 0)
+points = PackedVector2Array(0, 0, 55, 0)
+width = 5.0
+default_color = Color(0.0588235, 0.6, 0.105882, 1)
+
+[node name="Line2D_2" type="Line2D" parent="Root/LinesRoot"]
+position = Vector2(0, 28.86)
+rotation = 1.5708
+points = PackedVector2Array(0, 0, 55, 0)
+width = 5.0
+default_color = Color(0.0588235, 0.6, 0.105882, 1)
+
+[node name="Line2D_3" type="Line2D" parent="Root/LinesRoot"]
+position = Vector2(0, -28.86)
+rotation = -1.5708
+points = PackedVector2Array(0, 0, 55, 0)
+width = 5.0
+default_color = Color(0.0588235, 0.6, 0.105882, 1)
+
+[node name="Line2D_4" type="Line2D" parent="Root/LinesRoot"]
+position = Vector2(-83.86, 0)
+points = PackedVector2Array(0, 0, 55, 0)
+width = 5.0
+default_color = Color(0.0588235, 0.6, 0.105882, 1)
+
+[node name="Dot" type="Line2D" parent="Root/LinesRoot"]
+points = PackedVector2Array(-2.5, 0, 2.6, 0)
+width = 6.0
+default_color = Color(0.0588235, 0.6, 0.105882, 1)

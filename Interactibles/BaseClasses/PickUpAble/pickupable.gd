@@ -65,5 +65,5 @@ func move_towards_target(i_target: Vector3) -> float:
 	var path: Vector3 = i_target - current_pos
 	var path_length_sqrd: float = path.length_squared()
 	var dir: Vector3 = path.normalized()
-	node_root.linear_velocity = dir * move_to_target_speed * clampf(path_length_sqrd, 0, 1)
+	node_root.linear_velocity = dir * move_to_target_speed * clampf(path_length_sqrd, 0, 1.1)
 	return path_length_sqrd
