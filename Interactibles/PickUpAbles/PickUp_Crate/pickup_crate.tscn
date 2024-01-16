@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://o1qr4q371asa"]
+
+[ext_resource type="PackedScene" uid="uid://c21c1ayvqr2yd" path="res://Interactibles/BaseClasses/PickUpAble/pick_up_able.tscn" id="1_2enju"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q5ifx"]
+
+[node name="PickUp_Crate" type="RigidBody3D"]
+disable_mode = 2
+collision_layer = 8
+collision_mask = 15
+can_sleep = false
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_q5ifx")
+
+[node name="PickUpAble" parent="." node_paths=PackedStringArray("node_root", "collision_shape") instance=ExtResource("1_2enju")]
+node_root = NodePath("..")
+collision_shape = NodePath("../CollisionShape3D")

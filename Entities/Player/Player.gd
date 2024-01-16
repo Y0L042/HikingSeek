@@ -1,6 +1,7 @@
 class_name Entity_Player
-extends CharacterBody3D
+extends Entity
 
+#region Export Variables
 @export_group("Node References")
 @export var Body: CharacterBody3D
 @export var Spine: Node3D
@@ -9,7 +10,9 @@ extends CharacterBody3D
 @export var CrouchLow: Node3D
 @export var BodyShape_Stand: CollisionShape3D
 @export var BodyShape_Crouch: CollisionShape3D
-@export_subgroup("Raycast Node References")
+@export var Interact_Raycast: RayCast3D
+@export var Pickup_Container: Marker3D
+@export_subgroup("StairStep and Vault Raycast Node References")
 @export var STEP_UP_RAY_COUNT: float = 8
 @export var BaseStepUpSeparationRay: CollisionShape3D
 @export var StairBelowRay: RayCast3D
@@ -21,13 +24,16 @@ extends CharacterBody3D
 @export var MOVE_STATS: MovementStatsResource
 @export var JUMP_FRAME_GRACE: float = 5
 @export var MAX_SLOPE_ANG: float = 60
+#endregion Export Variables
 
+#region Input and Body Flags
 @onready var _initial_separation_ray_dist: float = abs(BaseStepUpSeparationRay.position.z)
-@export_group("WATCH")
 var input_flag_is_moving: bool
 var input_flag_sprint: bool
 var input_flag_jump: bool
 var input_flag_crouch: bool
+var input_flag_pickup: bool
+var input_flag_interact: bool
 var input_value_move_dir: Vector2
 var body_flag_is_crouching: bool = false
 var body_flag_is_vaulting: bool = false
@@ -38,6 +44,10 @@ var body_value_move_direction: Vector3:
 	get:
 		return (transform.basis * Vector3(input_value_move_dir.x, 0, input_value_move_dir.y)).normalized()
 var body_flag_on_climbable: bool = false
+
+var _flag_input_crouch_mode_held: bool = false
+var _flag_has_stepped: bool
+#endregion Input and Body Flags
 
 var _was_on_floor_last_frame: bool = false
 var _last_frame_was_on_floor: float = -1 * (JUMP_FRAME_GRACE + 1)
@@ -50,8 +60,8 @@ var stepup_ray_list: Array[CollisionShape3D] = []
 var velocity_modifiers_array: Array[Callable] = []
 var on_climbable: bool = false
 
-@export var _flag_input_crouch_mode_held: bool = false
-var _flag_has_stepped: bool
+var pickedup_object: Node3D
+
 
 func _ready() -> void:
 	add_to_group("Entity_Player")
@@ -74,7 +84,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	input_flag_is_moving = !input_value_move_dir.is_zero_approx()
 	input_flag_jump = Input.is_action_just_pressed("player_jump")
 	input_flag_sprint = Input.is_action_pressed("player_sprint")
-
+	input_flag_interact = Input.is_action_just_pressed("player_interact")
+	input_flag_pickup = Input.is_action_just_pressed("player_pickup")
 	execute_actions()
 
 func _snap_down_to_stairs_check() -> void:
@@ -242,18 +253,18 @@ func vault() -> bool:
 	return false
 
 
-func process_on_climbable(delta):
+func process_on_climbable(delta: float) -> void:
 	var CLIMBABLE_SPEED: float = 2
 	var input_dir: Vector2 = input_value_move_dir
 
-	var jump: bool = input_flag_jump
+	var _jump: bool = input_flag_jump
 
 	# Applying ladder input_dir to direction
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
 	velocity = direction * CLIMBABLE_SPEED
 
 	var look_vector: Basis = Head.transform.basis
-	if jump:
+	if _jump:
 		velocity += look_vector * Vector3.ONE * MOVE_STATS.ground_jump_force
 
 	# print("Input_dir:", input_dir, ". direction:", direction)

@@ -1,14 +1,15 @@
-[gd_scene load_steps=112 format=3 uid="uid://cepbn866qq7vp"]
+[gd_scene load_steps=113 format=3 uid="uid://cepbn866qq7vp"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_4vrwt"]
 [ext_resource type="Texture2D" uid="uid://hsce4mdccvta" path="res://trenchbroom/textures/Synty_Scifi_City_Pack/SimpleSky.png" id="1_t3mo7"]
 [ext_resource type="Resource" uid="uid://c36hv0o6g0udo" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="2_74v0s"]
-[ext_resource type="PackedScene" uid="uid://dxi0lq7jhyxy" path="res://Utils/Components/ClimbableArea/climbable_area.tscn" id="2_taqb4"]
+[ext_resource type="PackedScene" uid="uid://dxi0lq7jhyxy" path="res://Interactibles/Components/ClimbableArea/climbable_area.tscn" id="2_taqb4"]
 [ext_resource type="PackedScene" uid="uid://bixl2bghc80tt" path="res://entities/Player/Player.tscn" id="3_0fihh"]
 [ext_resource type="Texture2D" uid="uid://cx8ggmdnfugr1" path="res://trenchbroom/textures/DrySea/Color_a98143.png" id="3_nvdns"]
 [ext_resource type="Texture2D" uid="uid://da3cqbsgpsatr" path="res://trenchbroom/textures/DrySea/Color_2f2a35.png" id="4_06leq"]
 [ext_resource type="Texture2D" uid="uid://df6p13idjwh4x" path="res://trenchbroom/textures/DrySea/Color_9a5d40.png" id="4_f3vvy"]
 [ext_resource type="Texture2D" uid="uid://dvwpq2gc84uyl" path="res://trenchbroom/textures/DrySea/Color_625653.png" id="5_rhs73"]
+[ext_resource type="PackedScene" uid="uid://o1qr4q371asa" path="res://Interactibles/PickUpAbles/PickUp_Crate/pickup_crate.tscn" id="10_gno6g"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_y38dh"]
 panorama = ExtResource("1_t3mo7")
@@ -451,15 +452,29 @@ environment = SubResource("Environment_4jasr")
 
 [node name="MapGeometry" type="Marker3D" parent="World"]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="World/MapGeometry"]
+[node name="FixedInteractibles" type="Marker3D" parent="World/MapGeometry"]
+
+[node name="Ladder" type="CSGBox3D" parent="World/MapGeometry/FixedInteractibles"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.0778, 1.63908, 5.33429)
 use_collision = true
 size = Vector3(0.151245, 4.75943, 0.617676)
 metadata/_edit_group_ = true
 
-[node name="ClimbableArea" parent="World/MapGeometry/CSGBox3D" instance=ExtResource("2_taqb4")]
+[node name="ClimbableArea" parent="World/MapGeometry/FixedInteractibles/Ladder" instance=ExtResource("2_taqb4")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/MapGeometry/CSGBox3D/ClimbableArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/MapGeometry/FixedInteractibles/Ladder/ClimbableArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0950537, 0)
+shape = SubResource("BoxShape3D_opta1")
+
+[node name="Ladder2" type="CSGBox3D" parent="World/MapGeometry/FixedInteractibles"]
+transform = Transform3D(0.0871558, 0, -0.996195, 0, 1, 0, 0.996195, 0, 0.0871558, -7.48017, 13.6348, 19.941)
+use_collision = true
+size = Vector3(0.151245, 4.75943, 0.617676)
+metadata/_edit_group_ = true
+
+[node name="ClimbableArea" parent="World/MapGeometry/FixedInteractibles/Ladder2" instance=ExtResource("2_taqb4")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/MapGeometry/FixedInteractibles/Ladder2/ClimbableArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0950537, 0)
 shape = SubResource("BoxShape3D_opta1")
 
@@ -770,3 +785,86 @@ shape = SubResource("ConvexPolygonShape3D_k666l")
 
 [node name="Player" parent="World/Entities" instance=ExtResource("3_0fihh")]
 transform = Transform3D(-0.763187, 0, -0.646178, 0, 1, 0, 0.646178, 0, -0.763187, -26.7999, -1.90735e-06, 2.25567)
+
+[node name="PickUpAbleInteractibles" type="Marker3D" parent="World"]
+
+[node name="PickUp_Crate" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 1.1, 7.791)
+
+[node name="PickUp_Crate2" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 1.1, 7.791)
+
+[node name="PickUp_Crate3" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 1.1, 7.791)
+
+[node name="PickUp_Crate4" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 1.1, 9.3654)
+
+[node name="PickUp_Crate5" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 1.1, 9.3654)
+
+[node name="PickUp_Crate6" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 1.1, 9.3654)
+
+[node name="PickUp_Crate7" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 1.1, 10.6769)
+
+[node name="PickUp_Crate8" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 1.1, 10.6769)
+
+[node name="PickUp_Crate9" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 1.1, 10.6769)
+
+[node name="PickUp_Crate10" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 2.34105, 7.791)
+
+[node name="PickUp_Crate11" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 2.34105, 7.791)
+
+[node name="PickUp_Crate12" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 2.34105, 7.791)
+
+[node name="PickUp_Crate13" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 2.34105, 9.3654)
+
+[node name="PickUp_Crate14" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 2.34105, 9.3654)
+
+[node name="PickUp_Crate15" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 2.34105, 9.3654)
+
+[node name="PickUp_Crate16" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 2.34105, 10.6769)
+
+[node name="PickUp_Crate17" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 2.34105, 10.6769)
+
+[node name="PickUp_Crate18" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 2.34105, 10.6769)
+
+[node name="PickUp_Crate19" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 3.76531, 7.791)
+
+[node name="PickUp_Crate20" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 3.76531, 7.791)
+
+[node name="PickUp_Crate21" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 3.76531, 7.791)
+
+[node name="PickUp_Crate22" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 3.76531, 9.3654)
+
+[node name="PickUp_Crate23" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 3.76531, 9.3654)
+
+[node name="PickUp_Crate24" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 3.76531, 9.3654)
+
+[node name="PickUp_Crate25" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.251, 3.76531, 10.6769)
+
+[node name="PickUp_Crate26" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2729, 3.76531, 10.6769)
+
+[node name="PickUp_Crate27" parent="World/PickUpAbleInteractibles" instance=ExtResource("10_gno6g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.8826, 3.76531, 10.6769)

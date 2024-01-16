@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=26 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
 [ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
 [ext_resource type="PackedScene" uid="uid://dm5ca30ly74ow" path="res://Utils/SimpleFPSCamera/simple_fps_camera.tscn" id="2_owj77"]
 [ext_resource type="Resource" uid="uid://tj62diq6ijdu" path="res://entities/Player/Resources/player_movement_stats.tres" id="2_ytm56"]
+[ext_resource type="PackedScene" uid="uid://dpk5eqnpldcax" path="res://entities/Player/Components/PlayerInteractor/player_interactor.tscn" id="3_75xq8"]
 [ext_resource type="PackedScene" uid="uid://ck7ix6eiplcos" path="res://Utils/StateMachine/state.tscn" id="3_jtqg0"]
 [ext_resource type="Shape3D" uid="uid://d1kjh45ym8m2c" path="res://entities/Player/Resources/Player_body_stand.tres" id="3_nkcvc"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_idle.gd" id="4_aw57w"]
@@ -53,8 +54,12 @@ func _unhandled_input(_event: InputEvent) -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 "
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "Head", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "BaseStepUpSeparationRay", "StairBelowRay", "VaultRay", "VaultShapeCast")]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7svkh"]
+height = 0.25
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "Head", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "Interact_Raycast", "Pickup_Container", "BaseStepUpSeparationRay", "StairBelowRay", "VaultRay", "VaultShapeCast")]
 collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_s7lkf")
 Body = NodePath(".")
 Spine = NodePath("Spine")
@@ -63,12 +68,19 @@ CrouchHigh = NodePath("CrouchHigh")
 CrouchLow = NodePath("CrouchLow")
 BodyShape_Stand = NodePath("BodyCollisionShape_Stand")
 BodyShape_Crouch = NodePath("BodyCollisionShape_Crouch")
+Interact_Raycast = NodePath("Spine/Head/SimpleFPSCamera/InteractRaycast")
+Pickup_Container = NodePath("Spine/Head/PickUpContainer")
 BaseStepUpSeparationRay = NodePath("StepUpSeparationRay_F")
 StairBelowRay = NodePath("StairsBelowRayCast3D")
 VaultRay = NodePath("VaultRay")
 VaultShapeCast = NodePath("VaultShapeCast")
 MOVE_STATS = ExtResource("2_ytm56")
 JUMP_FRAME_GRACE = 6.0
+
+[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("node_root", "Interact_Raycast", "Pickup_Container") instance=ExtResource("3_75xq8")]
+node_root = NodePath("..")
+Interact_Raycast = NodePath("../Spine/Head/SimpleFPSCamera/InteractRaycast")
+Pickup_Container = NodePath("../Spine/Head/PickUpContainer")
 
 [node name="GroundTest" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.325, 0)
@@ -122,6 +134,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
 [node name="Head" type="Node3D" parent="Spine"]
 unique_name_in_owner = true
 
+[node name="PickUpContainer" type="Marker3D" parent="Spine/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.017, -2)
+
 [node name="SimpleFPSCamera" parent="Spine/Head" node_paths=PackedStringArray("character", "rot_target_y", "rot_target_x") instance=ExtResource("2_owj77")]
 current = true
 character = NodePath("../../..")
@@ -130,6 +145,12 @@ rot_target_x = NodePath("../..")
 BOB_EFFECTS_ENABLED = true
 BOB_FREQ = 1.2
 BOB_AMP = 0.06
+
+[node name="InteractRaycast" type="RayCast3D" parent="Spine/Head/SimpleFPSCamera"]
+target_position = Vector3(0, 0, -5)
+collision_mask = 15
+debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
+debug_shape_thickness = 1
 
 [node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
 node_root = NodePath("..")
@@ -169,3 +190,7 @@ script = ExtResource("18_q70x2")
 
 [node name="MouseCaptureDebug" type="Node" parent="."]
 script = SubResource("GDScript_ocyux")
+
+[node name="InteractibleCollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_7svkh")

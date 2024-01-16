@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://70rb58elt2lr"]
+
+[ext_resource type="Shader" path="res://Items/Interactible/redvillusion_outline_shader.gdshader" id="1_bjnss"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_bjnss")
+shader_parameter/enabled = false
+shader_parameter/border_width = 0.1
+shader_parameter/color = Color(1, 0.623, 0.13, 0.580392)
+shader_parameter/pattern = false
+shader_parameter/line_number = 0.0
+shader_parameter/line_sharpness = 0.299
+shader_parameter/pulse = false
+shader_parameter/pulse_speed = null
+shader_parameter/line_movement = null
+shader_parameter/line_movement_speed = null
+shader_parameter/wave = null

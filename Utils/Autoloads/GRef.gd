@@ -1,0 +1,4 @@
+class_name GRef
+extends Node
+
+static var GROUP_INTERACTIBLE_PICKUPABLE: String = "GROUP_INTERACTIBLE_PICKUPABLE"

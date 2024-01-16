@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://r65fo0tr37ua"]
+
+[ext_resource type="Script" path="res://Utils/Components/EasyRaycast3D/easy_raycast3d.gd" id="1_h5acg"]
+
+[node name="EasyRayCast3D" type="RayCast3D"]
+script = ExtResource("1_h5acg")
