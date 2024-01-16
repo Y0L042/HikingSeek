@@ -1,2 +1,2 @@
-class_name Entity
+class_name EntityBaseClass
 extends CharacterBody3D

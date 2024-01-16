@@ -1,5 +1,5 @@
 class_name Entity_Player
-extends Entity
+extends EntityBaseClass
 
 #region Export Variables
 @export_group("Node References")
@@ -277,7 +277,7 @@ func process_on_climbable(delta: float) -> void:
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
 	velocity = direction * CLIMBABLE_SPEED
 
-	var look_vector: Basis = Head.transform.basis
+	var look_vector: Basis = Head.global_transform.basis
 	if _jump:
 		velocity += look_vector * Vector3.ONE * MOVE_STATS.ground_jump_force
 

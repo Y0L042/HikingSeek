@@ -8,7 +8,7 @@ extends Node3D
 @export var max_distance: float = INF
 
 var is_being_carried: bool
-var holder: Entity
+var holder: Variant
 var target_container: Node3D
 var force_holder_to_drop: Callable
 var original_col_mask: int
@@ -38,7 +38,7 @@ func be_carried(delta: float) -> bool:
 	return dist_exceeded
 
 func hold(i_holder: Node3D, i_force_holder_to_drop: Callable, i_target_container: Node3D) -> void:
-	holder = i_holder as Entity
+	holder = i_holder
 	target_container = i_target_container
 	force_holder_to_drop = i_force_holder_to_drop
 	#node_root.collision_mask = original_col_mask - holder.collision_layer
