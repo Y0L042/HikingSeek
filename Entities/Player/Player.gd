@@ -134,6 +134,19 @@ func _rotate_step_up_separation_ray() -> void:
 	for ray: CollisionShape3D in stepup_ray_list:
 		ray.disabled = any_too_steep
 
+func _push_rigidbodies() -> void:
+	var push_force: float = 1
+	push_force = push_force * velocity.length()
+	push_force = clampf(push_force, 1, INF)
+	for i: int in get_slide_collision_count():
+		var col: KinematicCollision3D = get_slide_collision(i)
+		if col.get_collider() is RigidBody3D:
+			if col.get_normal().dot(Vector3.UP) > 0.707: return
+			var collider: RigidBody3D = col.get_collider()
+			#col.get_collider().apply_central_force(-col.get_normal() * push_force)
+			col.get_collider().apply_central_impulse(-col.get_normal() * push_force)
+			pass
+
 func _apply_velocity_modifiers(i_velocity: Vector3) -> Vector3:
 	for modifier: Callable in velocity_modifiers_array:
 		i_velocity = modifier.call(i_velocity)
@@ -153,6 +166,7 @@ func move(delta: float, i_speed: float, i_accel: float) -> void:
 	_rotate_step_up_separation_ray()
 	if _flag_has_stepped and !Input.is_action_pressed("player_jump"): velocity.y = 0 #Neutralize Y Vel if player just want to get over edge of object
 	move_and_slide()
+	_push_rigidbodies()
 	_snap_down_to_stairs_check()
 	_flag_has_stepped = abs(get_real_velocity().y - velocity.y) > step_vel_threshold
 
@@ -272,3 +286,4 @@ func process_on_climbable(delta: float) -> void:
 
 	if is_on_floor():
 		on_climbable = false
+
