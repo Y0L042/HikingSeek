@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=24 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
 [ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_jump.gd" id="9_iog75"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_crouch.gd" id="12_4t5gy"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair.gd" id="13_r355b"]
+[ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onclimbable.gd" id="18_q70x2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nxaro"]
 radius = 0.325
@@ -162,6 +163,9 @@ script = ExtResource("8_8qixk")
 
 [node name="InAir_Move" parent="PlayerStateMachineHandler/PlayerStateClass/InAir" instance=ExtResource("3_jtqg0")]
 script = ExtResource("9_gaje5")
+
+[node name="OnClimbable" parent="PlayerStateMachineHandler/PlayerStateClass" instance=ExtResource("3_jtqg0")]
+script = ExtResource("18_q70x2")
 
 [node name="MouseCaptureDebug" type="Node" parent="."]
 script = SubResource("GDScript_ocyux")

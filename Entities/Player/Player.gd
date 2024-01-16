@@ -37,6 +37,7 @@ var body_flag_on_ground: bool:
 var body_value_move_direction: Vector3:
 	get:
 		return (transform.basis * Vector3(input_value_move_dir.x, 0, input_value_move_dir.y)).normalized()
+var body_flag_on_climbable: bool = false
 
 var _was_on_floor_last_frame: bool = false
 var _last_frame_was_on_floor: float = -1 * (JUMP_FRAME_GRACE + 1)
@@ -47,11 +48,13 @@ var _cur_frame: int
 var _last_xz_vel: Vector3
 var stepup_ray_list: Array[CollisionShape3D] = []
 var velocity_modifiers_array: Array[Callable] = []
+var on_climbable: bool = false
 
 @export var _flag_input_crouch_mode_held: bool = false
 var _flag_has_stepped: bool
 
 func _ready() -> void:
+	add_to_group("Entity_Player")
 	_generate_stepup_rays()
 
 func _generate_stepup_rays() -> void:
@@ -217,14 +220,14 @@ func vault() -> bool:
 	if VaultRay.is_colliding():
 		var ray_normal: Vector3 = VaultRay.get_collision_normal()
 		if ray_normal.dot(Vector3(0, 1, 0)) < sin(deg_to_rad(MAX_SLOPE_ANG)):
-			DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.FIREBRICK, 30) # HACK
+			#DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.FIREBRICK, 30) # HACK
 			return false
 		VaultShapeCast.global_position = VaultRay.get_collision_point() + Vector3.UP * VaultShapeCast.shape.height/2 + Vector3(0, 0.01, 0)
 		VaultShapeCast.force_shapecast_update()
 		if VaultShapeCast.is_colliding():
-			DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.WEB_MAROON, 30) # HACK
+			#DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.WEB_MAROON, 30) # HACK
 			return false
-		DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.CHARTREUSE, 30) # HACK
+		#DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.CHARTREUSE, 30) # HACK
 		body_flag_is_vaulting = true
 		var y_time: float = 0.85
 		var xz_time: float = 0.55
@@ -237,3 +240,24 @@ func vault() -> bool:
 		tween_z.tween_property(self, "global_position:z", VaultRay.get_collision_point().z, xz_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 		return true
 	return false
+
+
+func process_on_climbable(delta):
+	var CLIMBABLE_SPEED: float = 2
+	var input_dir: Vector2 = input_value_move_dir
+
+	var jump: bool = input_flag_jump
+
+	# Applying ladder input_dir to direction
+	var direction: Vector3 = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
+	velocity = direction * CLIMBABLE_SPEED
+
+	var look_vector: Basis = Head.transform.basis
+	if jump:
+		velocity += look_vector * Vector3.ONE * MOVE_STATS.ground_jump_force
+
+	# print("Input_dir:", input_dir, ". direction:", direction)
+	move_and_slide()
+
+	if is_on_floor():
+		on_climbable = false

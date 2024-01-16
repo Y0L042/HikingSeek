@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxi0lq7jhyxy"]
+
+[ext_resource type="Script" path="res://Utils/Components/ClimbableArea/climbable_area.gd" id="1_23tgf"]
+
+[node name="ClimbableArea" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_23tgf")
