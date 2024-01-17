@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://0odophvj6fb8"]
+
+[ext_resource type="Script" path="res://Props/WorldEnvironment/world_environment.gd" id="1_xgbrp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bp4hg"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.682353, 0.329412, 0.0941176, 1)
+sky_curve = 0.102453
+sky_energy_multiplier = 0.1
+
+[sub_resource type="Sky" id="Sky_r6a4t"]
+sky_material = SubResource("ProceduralSkyMaterial_bp4hg")
+
+[sub_resource type="Environment" id="Environment_ckgyc"]
+background_mode = 2
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_r6a4t")
+
+[sub_resource type="SphereMesh" id="SphereMesh_2pdkq"]
+
+[node name="WorldEnvironment" type="Node3D" node_paths=PackedStringArray("SkyEnvironment", "SunMoon_ref", "Sun", "Moon")]
+script = ExtResource("1_xgbrp")
+SkyEnvironment = NodePath("WorldEnvironment")
+SunMoon_ref = NodePath("SunMoon")
+Sun = NodePath("SunMoon/Sun")
+Moon = NodePath("SunMoon/Moon")
+use_time_of_day = true
+time_of_day = 2300.0
+sky_rotation = 345.0
+background_energy_min = 1.0
+sun_offset = 500.0
+moon_offset = 500.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ckgyc")
+
+[node name="SunMoon" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 0, 0, 0)
+
+[node name="Sun" type="MeshInstance3D" parent="SunMoon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -500, 0)
+mesh = SubResource("SphereMesh_2pdkq")
+
+[node name="SunDirectionalLight3D" type="DirectionalLight3D" parent="SunMoon/Sun"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Moon" type="MeshInstance3D" parent="SunMoon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 500, 0)
+mesh = SubResource("SphereMesh_2pdkq")
+
+[node name="MoonDirectionalLight3D" type="DirectionalLight3D" parent="SunMoon/Moon"]
+light_color = Color(0.368627, 0.317647, 0.235294, 1)
+light_energy = 0.1
+light_indirect_energy = 0.01
+light_volumetric_fog_energy = 0.01
+shadow_enabled = true

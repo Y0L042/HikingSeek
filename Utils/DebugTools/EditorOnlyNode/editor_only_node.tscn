@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://6bwa32786kon"]
+
+[ext_resource type="Script" path="res://Utils/DebugTools/EditorOnlyNode/editor_only_node.gd" id="1_phep4"]
+
+[node name="EditorOnlyNode" type="Node3D"]
+script = ExtResource("1_phep4")

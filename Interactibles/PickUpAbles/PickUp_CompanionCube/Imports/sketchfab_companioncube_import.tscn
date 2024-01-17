@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://clahsm3oyye08"]
+
+[ext_resource type="PackedScene" uid="uid://k105d2y2bhch" path="res://Interactibles/PickUpAbles/PickUp_CompanionCube/Imports/companion_cube_-_portal_2_version.glb" id="1_p76ej"]
+
+[node name="Sketchfab_companioncube_import" instance=ExtResource("1_p76ej")]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmpgkpexq1plt"]
+
+[ext_resource type="PackedScene" uid="uid://c1bw3b85ae7c2" path="res://Props/StreetLamp_01/Imports/streetlamp_01_import.tscn" id="1_wmtgh"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lsmtq"]
+height = 5.0
+radius = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5jvvh"]
+size = Vector3(0.330688, 0.243896, 1.17676)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v7ia2"]
+radius = 0.05
+height = 1.18733
+
+[node name="Streetlamp_01" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("CylinderShape3D_lsmtq")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.30132, -1.667)
+shape = SubResource("BoxShape3D_5jvvh")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.3442, 0.938896, 0, -0.938896, 0.3442, 0, 5.03278, -0.554167)
+shape = SubResource("CapsuleShape3D_v7ia2")
+
+[node name="Streetlamp01Import" parent="." instance=ExtResource("1_wmtgh")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="LightRef" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.07593, -1.83297)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="LightRef"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+light_color = Color(0.992157, 0.870588, 0.752941, 1)
+light_energy = 3.0
+light_indirect_energy = 0.5
+light_volumetric_fog_energy = 0.1
+light_bake_mode = 1
+shadow_enabled = true
+spot_range = 9.45422
+spot_attenuation = 0.732043
+spot_angle = 59.8819
+spot_angle_attenuation = 0.535887
+
+[node name="OmniLight3D" type="OmniLight3D" parent="LightRef"]
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+omni_range = 0.5
+omni_attenuation = 2.73208
+
+[editable path="Streetlamp01Import"]

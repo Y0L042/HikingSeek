@@ -1,0 +1,26 @@
+[gd_resource type="VisualShader" load_steps=3 format=3 uid="uid://dy85i2rq34r6s"]
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_7156o"]
+
+[sub_resource type="VisualShaderNodeParameterRef" id="VisualShaderNodeParameterRef_l54kg"]
+output_port_for_preview = 0
+
+[resource]
+code = "shader_type sky;
+
+
+
+void sky() {
+}
+"
+graph_offset = Vector2(-613, -159)
+mode = 3
+flags/use_half_res_pass = false
+flags/use_quarter_res_pass = false
+flags/disable_fog = false
+flags/use_debanding = false
+nodes/sky/2/node = SubResource("VisualShaderNodeUVFunc_7156o")
+nodes/sky/2/position = Vector2(68, 128)
+nodes/sky/3/node = SubResource("VisualShaderNodeParameterRef_l54kg")
+nodes/sky/3/position = Vector2(-280, 40)
+nodes/sky/connections = PackedInt32Array(3, 0, 2, 1)

@@ -1,0 +1,87 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://pjbg0u1j7cju"
+path="res://.godot/imported/clouds.glb-fe9cc3637dd924cc389d4cce57cf5bb6.scn"
+
+[deps]
+
+source_file="res://Props/Clouds/Imports/clouds.glb"
+dest_files=["res://.godot/imported/clouds.glb-fe9cc3637dd924cc389d4cce57cf5bb6.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"meshes": {
+"Environment_Mesh_106": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://Props/Clouds/Imports/Meshes/Environment_Mesh_106.res"
+},
+"Environment_Mesh_107": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://Props/Clouds/Imports/Meshes/Environment_Mesh_107.res"
+},
+"Environment_Mesh_108": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://Props/Clouds/Imports/Meshes/Environment_Mesh_108.res"
+},
+"Environment_Mesh_109": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://Props/Clouds/Imports/Meshes/Environment_Mesh_109.res"
+},
+"Environment_Mesh_110": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://Props/Clouds/Imports/Meshes/Environment_Mesh_110.res"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

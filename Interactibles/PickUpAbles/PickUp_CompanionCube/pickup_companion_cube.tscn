@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://djssfrgedr3q0"]
+
+[ext_resource type="PackedScene" uid="uid://clahsm3oyye08" path="res://Interactibles/PickUpAbles/PickUp_CompanionCube/Imports/sketchfab_companioncube_import.tscn" id="1_8ybl2"]
+[ext_resource type="PackedScene" uid="uid://c21c1ayvqr2yd" path="res://Interactibles/BaseClasses/PickUpAble/pick_up_able.tscn" id="2_dmjgp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wehmf"]
+
+[node name="CompanionCube" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 13
+
+[node name="Sketchfab_companioncube_import" parent="." instance=ExtResource("1_8ybl2")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_wehmf")
+
+[node name="PickUpAble" parent="." node_paths=PackedStringArray("node_root", "collision_shape") instance=ExtResource("2_dmjgp")]
+node_root = NodePath("..")
+collision_shape = NodePath("../CollisionShape3D")
