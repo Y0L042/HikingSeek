@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://b4sm1hi6rulll"
+path="res://.godot/imported/map_1.18.map-70c6f3abc8ac84c70f3e5c73c765bdcf.tres"
+
+[deps]
+
+source_file="res://trenchbroom/maps/map1/autosave/map_1.18.map"
+dest_files=["res://.godot/imported/map_1.18.map-70c6f3abc8ac84c70f3e5c73c765bdcf.tres"]
+
+[params]
+

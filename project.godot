@@ -45,6 +45,7 @@ folder_colors={
 "res://Utils/": "gray",
 "res://addons/": "gray",
 "res://entities/": "pink",
+"res://textures/": "pink",
 "res://trenchbroom/": "red"
 }
 

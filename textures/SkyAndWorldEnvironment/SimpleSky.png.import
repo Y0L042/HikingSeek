@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://bbu4wavw2q0mh"
+path="res://.godot/imported/SimpleSky.png-30611553e70ea7e31cb8d4caffac0527.image"
+
+[deps]
+
+source_file="res://textures/SkyAndWorldEnvironment/SimpleSky.png"
+dest_files=["res://.godot/imported/SimpleSky.png-30611553e70ea7e31cb8d4caffac0527.image"]
+
+[params]
+
