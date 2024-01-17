@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onclimbable.gd" id="18_q70x2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nxaro"]
-radius = 0.325
+radius = 0.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_evhkp"]
 radius = 0.225
@@ -81,11 +81,11 @@ Interact_Raycast = NodePath("../Spine/Head/SimpleFPSCamera/InteractRaycast")
 Pickup_Container = NodePath("../Spine/Head/PickUpContainer")
 
 [node name="GroundTest" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.325, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 shape = SubResource("SphereShape3D_nxaro")
 
 [node name="BodyCollisionShape_Stand" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3744, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25183, 0)
 shape = ExtResource("3_nkcvc")
 
 [node name="BodyCollisionShape_Crouch" type="CollisionShape3D" parent="."]
@@ -111,7 +111,7 @@ target_position = Vector3(0, 0, 0)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="StepUpSeparationRay_F" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.75, -0.355)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.75, -0.255)
 shape = SubResource("SeparationRayShape3D_nk36c")
 
 [node name="RayCast3D" type="RayCast3D" parent="StepUpSeparationRay_F"]

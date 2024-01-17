@@ -28,7 +28,7 @@ map_formats = Array[Dictionary]([{
 }])
 fgd_files = Array[Resource]([ExtResource("5_7ndh4")])
 entity_scale = "1"
-default_uv_scale = Vector2(1, 1)
+default_uv_scale = Vector2(0.063, 0.063)
 brush_tags = Array[Resource]([ExtResource("1_4j3jq"), ExtResource("2_qjmst")])
 face_tags = Array[Resource]([ExtResource("3_hnegt"), ExtResource("4_e0gso")])
 face_attrib_surface_flags = Array[Resource]([])

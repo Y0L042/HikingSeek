@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://o1qr4q371asa"]
+[gd_scene load_steps=5 format=3 uid="uid://o1qr4q371asa"]
 
 [ext_resource type="PackedScene" uid="uid://c21c1ayvqr2yd" path="res://Interactibles/BaseClasses/PickUpAble/pick_up_able.tscn" id="1_2enju"]
+[ext_resource type="Texture2D" uid="uid://bp7udqqsrraht" path="res://trenchbroom/textures/Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_05.png" id="1_yngj2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_al2gy"]
+albedo_texture = ExtResource("1_yngj2")
+uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q5ifx"]
 
@@ -11,6 +16,7 @@ collision_mask = 13
 can_sleep = false
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
+material = SubResource("StandardMaterial3D_al2gy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_q5ifx")

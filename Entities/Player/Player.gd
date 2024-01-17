@@ -58,6 +58,14 @@ var _cur_frame: int
 var _last_xz_vel: Vector3
 var stepup_ray_list: Array[CollisionShape3D] = []
 var velocity_modifiers_array: Array[Callable] = []
+
+var _in_climbable_range: bool = false
+var in_climbable_range: bool:
+	get:
+		return _in_climbable_range
+	set(value):
+		_in_climbable_range = value
+		on_climbable = value
 var on_climbable: bool = false
 
 var pickedup_object: Node3D
@@ -159,6 +167,7 @@ func move(delta: float, i_speed: float, i_accel: float) -> void:
 	_cur_frame += 1
 	if is_on_floor():
 		_last_frame_was_on_floor = _cur_frame
+	test_for_climbable()
 	velocity.x = lerp(velocity.x, body_value_move_direction.x * speed, delta * accel)
 	velocity.z = lerp(velocity.z, body_value_move_direction.z * speed, delta * accel)
 	if body_flag_is_crouching and is_on_ground(): velocity_modifiers_array.append(modify_crouch_speed)
@@ -241,6 +250,10 @@ func exit_crouch() -> void:
 	tween.tween_property(Spine, "position", CrouchHigh.position, exit_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 
 func vault() -> bool:
+	if !is_on_ground():
+		VaultRay.target_position.y = -1.75
+	else:
+		VaultRay.target_position.y = -0.75
 	VaultRay.force_raycast_update()
 	if VaultRay.is_colliding():
 		var ray_normal: Vector3 = VaultRay.get_collision_normal()
@@ -266,24 +279,32 @@ func vault() -> bool:
 		return true
 	return false
 
+func test_for_climbable() -> void:
+	if in_climbable_range and !is_on_floor():
+		if on_climbable:
+			if Input.is_action_just_pressed('player_jump'):
+				GDebug.print(self, ["Jump OFF climbable"], 'blue')
+				jump_off_climbable()
+				var tween: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+				tween.tween_property(self, "on_climbable", false, 0.5)
+		elif !on_climbable:
+			on_climbable = true
+			GDebug.print(self, ["Climb ON climbable"], 'green')
+	else:
+		on_climbable = false
 
 func process_on_climbable(delta: float) -> void:
+	test_for_climbable()
 	var CLIMBABLE_SPEED: float = 2
 	var input_dir: Vector2 = input_value_move_dir
-
-	var _jump: bool = input_flag_jump
-
 	# Applying ladder input_dir to direction
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
 	velocity = direction * CLIMBABLE_SPEED
-
-	var look_vector: Basis = Head.global_transform.basis
-	if _jump:
-		velocity += look_vector * Vector3.ONE * MOVE_STATS.ground_jump_force
-
-	# print("Input_dir:", input_dir, ". direction:", direction)
 	move_and_slide()
 
-	if is_on_floor():
-		on_climbable = false
+func jump_off_climbable() -> void:
+	on_climbable = false
+	var look_vector: Vector3 = -Head.global_transform.basis.z
+	var jump_vel: Vector3 = velocity + (look_vector + Vector3.UP) * Vector3.ONE * MOVE_STATS.ground_jump_force
+	velocity_modifiers_array.append(func(i_vel) -> Vector3: return jump_vel)
 

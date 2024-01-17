@@ -95,7 +95,7 @@ var _base_text: String = """{
 			%s
 		]
 	},
-	"faceattribs": { 
+	"faceattribs": {
 		"defaults": {
 			%s
 		},
@@ -136,7 +136,7 @@ func build_class_text() -> String:
 			map_formats_str += " },\n\t\t"
 		else:
 			map_formats_str += " }"
-	
+
 	var fgd_filename_str := ""
 	for fgd_filename in _fgd_filenames:
 		fgd_filename_str += "\"%s\"" % fgd_filename
@@ -225,14 +225,14 @@ func do_export_file():
 		print("Skipping export: No FGD files")
 		return
 	print("Exporting TrenchBroom Game Config Folder to ", config_folder)
-	
+
 	# Icon
 	var icon_path : String = config_folder + "/icon.png"
 	print("Exporting icon to ", icon_path)
 	var export_icon : Image = icon.get_image()
 	export_icon.resize(32, 32, Image.INTERPOLATE_LANCZOS)
 	export_icon.save_png(icon_path)
-	
+
 	# .cfg
 	var export_config_file: Dictionary = {}
 	export_config_file.game_name = game_name
@@ -245,7 +245,7 @@ func do_export_file():
 	var file = FileAccess.open(export_config_file.target_file, FileAccess.WRITE)
 	file.store_string(build_class_text())
 	file = null # Official way to close files in GDscript 2
-	
+
 	# FGDs
 	for fgd_file in fgd_files:
 		if not fgd_file is QodotFGDFile:
