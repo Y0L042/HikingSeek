@@ -1,0 +1,83 @@
+[gd_scene load_steps=35 format=3 uid="uid://6uhco5oy5biy"]
+
+[ext_resource type="Script" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/pickup_portal_2_turret.gd" id="1_hh1qt"]
+[ext_resource type="PackedScene" uid="uid://dh8h68w04dd3m" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/portal_2_turret_import.tscn" id="1_ktsid"]
+[ext_resource type="AudioStream" uid="uid://d3bv4603s8ags" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_1.wav" id="2_57vqf"]
+[ext_resource type="PackedScene" uid="uid://c21c1ayvqr2yd" path="res://Interactibles/BaseClasses/PickUpAble/pick_up_able.tscn" id="2_ifw4s"]
+[ext_resource type="AudioStream" uid="uid://d2corbc8uk6wr" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_2.wav" id="3_70n6r"]
+[ext_resource type="PackedScene" uid="uid://b8c853il2262w" path="res://Interactibles/BaseClasses/Interactible/interactible.tscn" id="3_p0bye"]
+[ext_resource type="AudioStream" uid="uid://gldpdkjlymfn" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_3.wav" id="4_ubj3q"]
+[ext_resource type="AudioStream" uid="uid://dgvdxvn1d60it" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_4.wav" id="5_smxp4"]
+[ext_resource type="AudioStream" uid="uid://drn4lvr85l0vf" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_5.wav" id="6_iewfm"]
+[ext_resource type="AudioStream" uid="uid://bb5sk5d8k28sj" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_6.wav" id="7_oxdn2"]
+[ext_resource type="AudioStream" uid="uid://ct5vnfvm0afsm" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_7.wav" id="8_d1tsq"]
+[ext_resource type="AudioStream" uid="uid://capg8evpk3nia" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_8.wav" id="9_ug0rm"]
+[ext_resource type="AudioStream" uid="uid://cruetgrgo4g8n" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_9.wav" id="10_kclir"]
+[ext_resource type="AudioStream" uid="uid://civ5ada72qc1" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_pickup_10.wav" id="11_xnu38"]
+[ext_resource type="AudioStream" uid="uid://d2b4j6fgf715m" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched01.wav" id="12_uiyho"]
+[ext_resource type="AudioStream" uid="uid://drjtdlfxkf6pw" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched02.wav" id="13_3jrom"]
+[ext_resource type="AudioStream" uid="uid://b5j46n560wry1" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched03.wav" id="14_od4u3"]
+[ext_resource type="AudioStream" uid="uid://pplmhj7hfgem" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched04.wav" id="15_58jwh"]
+[ext_resource type="AudioStream" uid="uid://c041f6jldrmxd" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched05.wav" id="16_o60c0"]
+[ext_resource type="AudioStream" uid="uid://ckdjat6hjjget" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched06.wav" id="17_wuum8"]
+[ext_resource type="AudioStream" uid="uid://owday33md00t" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched07.wav" id="18_e12eq"]
+[ext_resource type="AudioStream" uid="uid://cjd1oh0r7g1ae" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched08.wav" id="19_c6sxs"]
+[ext_resource type="AudioStream" uid="uid://bydqn6afcyiin" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched09.wav" id="20_rd1eh"]
+[ext_resource type="AudioStream" uid="uid://bcjdf622n3upa" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched10.wav" id="21_5kh2m"]
+[ext_resource type="AudioStream" uid="uid://bet2ytnx0ykcb" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turretlaunched11.wav" id="22_r7oin"]
+[ext_resource type="AudioStream" uid="uid://p03qnakhuo53" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_tipped_1.wav" id="23_kpwn1"]
+[ext_resource type="AudioStream" uid="uid://jm875rapnatt" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_tipped_2.wav" id="24_a5e5h"]
+[ext_resource type="AudioStream" uid="uid://dlgq4seid55s2" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_tipped_3.wav" id="25_545xh"]
+[ext_resource type="AudioStream" uid="uid://cf6m2dwr0ow7v" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_tipped_4.wav" id="26_h1o8v"]
+[ext_resource type="AudioStream" uid="uid://cy7mpjnlns2rf" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_tipped_5.wav" id="27_vnb0a"]
+[ext_resource type="AudioStream" uid="uid://cdvje28dramgw" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/Turret_turret_tipped_6.wav" id="28_v85pt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xut6t"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ymmgm"]
+height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wsbam"]
+size = Vector3(0, 0.13, 0)
+
+[node name="Portal2Turret" type="RigidBody3D" node_paths=PackedStringArray("audiostreamplayer")]
+collision_layer = 12
+collision_mask = 13
+script = ExtResource("1_hh1qt")
+audiostreamplayer = NodePath("AudioStreamPlayer3D")
+pickup_audiostream_array = Array[AudioStream]([ExtResource("2_57vqf"), ExtResource("3_70n6r"), ExtResource("4_ubj3q"), ExtResource("5_smxp4"), ExtResource("6_iewfm"), ExtResource("7_oxdn2"), ExtResource("8_d1tsq"), ExtResource("9_ug0rm"), ExtResource("10_kclir"), ExtResource("11_xnu38")])
+thrown_audiostream_array = Array[AudioStream]([ExtResource("12_uiyho"), ExtResource("13_3jrom"), ExtResource("14_od4u3"), ExtResource("15_58jwh"), ExtResource("16_o60c0"), ExtResource("17_wuum8"), ExtResource("18_e12eq"), ExtResource("19_c6sxs"), ExtResource("20_rd1eh"), ExtResource("21_5kh2m"), ExtResource("22_r7oin")])
+fallingover_audiostream_array = Array[AudioStream]([ExtResource("23_kpwn1"), ExtResource("24_a5e5h"), ExtResource("25_545xh"), ExtResource("26_h1o8v"), ExtResource("27_vnb0a"), ExtResource("28_v85pt")])
+
+[node name="portal_2_turret_import" parent="." instance=ExtResource("1_ktsid")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.885458, 0)
+shape = SubResource("SphereShape3D_xut6t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_ymmgm")
+
+[node name="PickUpAble" parent="." node_paths=PackedStringArray("node_root", "collision_shape") instance=ExtResource("2_ifw4s")]
+node_root = NodePath("..")
+collision_shape = NodePath("../CollisionShape3D")
+
+[node name="Interactible" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("3_p0bye")]
+node_root = NodePath("..")
+
+[node name="CollisionShape3D" parent="Interactible" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.706064, 0)
+shape = SubResource("BoxShape3D_wsbam")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.849743, -0.244004)
+volume_db = -3.0
+bus = &"SoundEffects"
+doppler_tracking = 2
+
+[connection signal="pickedup" from="PickUpAble" to="." method="_on_pick_up_able_pickedup"]
+[connection signal="thrown" from="PickUpAble" to="." method="_on_pick_up_able_thrown"]
+
+[editable path="Interactible"]

@@ -76,6 +76,7 @@ MOVE_STATS = ExtResource("2_ytm56")
 JUMP_FRAME_GRACE = 6.0
 
 [node name="PlayerInteractor" parent="." node_paths=PackedStringArray("node_root", "Interact_Raycast", "Pickup_Container") instance=ExtResource("3_75xq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
 node_root = NodePath("..")
 Interact_Raycast = NodePath("../Spine/Head/SimpleFPSCamera/InteractRaycast")
 Pickup_Container = NodePath("../Spine/Head/PickUpContainer")
@@ -144,14 +145,15 @@ BOB_EFFECTS_ENABLED = true
 BOB_FREQ = 1.2
 BOB_AMP = 0.06
 
-[node name="InteractRaycast" type="RayCast3D" parent="Spine/Head/SimpleFPSCamera"]
-target_position = Vector3(0, 0, -5)
-collision_mask = 15
-debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
-debug_shape_thickness = 1
-
 [node name="Crosshair" parent="Spine/Head/SimpleFPSCamera" instance=ExtResource("7_b3c7t")]
 crosshair_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[node name="InteractRaycast" type="RayCast3D" parent="Spine/Head/SimpleFPSCamera"]
+target_position = Vector3(0, 0, -5)
+collision_mask = 8
+collide_with_areas = true
+debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
+debug_shape_thickness = 1
 
 [node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
 node_root = NodePath("..")

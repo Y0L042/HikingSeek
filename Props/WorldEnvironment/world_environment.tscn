@@ -3,10 +3,11 @@
 [ext_resource type="Script" path="res://Props/WorldEnvironment/world_environment.gd" id="1_xgbrp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bp4hg"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0.682353, 0.329412, 0.0941176, 1)
+sky_top_color = Color(0.350981, 0.488235, 0.503922, 1)
+sky_horizon_color = Color(0.409804, 0.254902, 0.17647, 1)
 sky_curve = 0.102453
-sky_energy_multiplier = 0.1
+sky_energy_multiplier = 0.5
+sun_angle_max = 0.0
 
 [sub_resource type="Sky" id="Sky_r6a4t"]
 sky_material = SubResource("ProceduralSkyMaterial_bp4hg")
@@ -15,6 +16,9 @@ sky_material = SubResource("ProceduralSkyMaterial_bp4hg")
 background_mode = 2
 background_energy_multiplier = 0.5
 sky = SubResource("Sky_r6a4t")
+fog_density = 0.05
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_2pdkq"]
 
@@ -24,18 +28,24 @@ SkyEnvironment = NodePath("WorldEnvironment")
 SunMoon_ref = NodePath("SunMoon")
 Sun = NodePath("SunMoon/Sun")
 Moon = NodePath("SunMoon/Moon")
-use_time_of_day = true
-time_of_day = 2300.0
-sky_rotation = 345.0
-background_energy_min = 1.0
+time_of_day = 1092.0
+sky_rotation = 163.8
+minutes_per_day = 0.5
+background_energy_min = 0.1
+sky_top_color_day = Color(0.631373, 0.968627, 1, 1)
+sky_top_color_night = Color(0.0705882, 0.00784314, 0.00784314, 1)
+sky_horizon_color_day = Color(0.529412, 0.329412, 0.227451, 1)
+sky_horizon_color_night = Color(0.290196, 0.180392, 0.12549, 1)
 sun_offset = 500.0
 moon_offset = 500.0
+DISABLE_EDITOR_MODE = null
+clamp_cos_value = 0.980147
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ckgyc")
 
 [node name="SunMoon" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965925, 0.258819, 0, -0.258819, 0.965925, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -0.960293, -0.278991, 0, 0.278991, -0.960293, 0, 0, 0)
 
 [node name="Sun" type="MeshInstance3D" parent="SunMoon"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -500, 0)
@@ -45,13 +55,19 @@ mesh = SubResource("SphereMesh_2pdkq")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 shadow_enabled = true
 
+[node name="OmniLight3D" type="OmniLight3D" parent="SunMoon/Sun"]
+transform = Transform3D(1, 0, 0, 0, 1, 7.10543e-15, 0, -7.10543e-15, 1, 0, 1, -8.7417e-08)
+
 [node name="Moon" type="MeshInstance3D" parent="SunMoon"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 500, 0)
 mesh = SubResource("SphereMesh_2pdkq")
 
 [node name="MoonDirectionalLight3D" type="DirectionalLight3D" parent="SunMoon/Moon"]
 light_color = Color(0.368627, 0.317647, 0.235294, 1)
-light_energy = 0.1
+light_energy = 0.01
 light_indirect_energy = 0.01
 light_volumetric_fog_energy = 0.01
 shadow_enabled = true
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="SunMoon/Moon"]
+transform = Transform3D(1, 0, 0, 0, 1, 7.10543e-15, 0, -7.10543e-15, 1, 0, -1, 8.7417e-08)

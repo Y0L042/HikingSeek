@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
-.godot/
-.Assets/
+.godot/*
+.Assets/*
+Interactibles/PickUpAbles/PickUp_Portal2Turret/Imports/*
+.Interactibles\PickUpAbles\PickUp_Portal2Turret\Imports\

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://ltmtnvalv34j"]
+
+[ext_resource type="Script" path="res://Props/DynamicFogVolume/dynamic_fog_volume.gd" id="1_3pyoj"]
+
+[sub_resource type="Gradient" id="Gradient_y5not"]
+offsets = PackedFloat32Array(0.172249, 0.717703, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.315789, 0.315789, 0.315789, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pkmb8"]
+noise_type = 3
+frequency = 0.0263
+offset = Vector3(0, 50.8726, 0)
+fractal_type = 3
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_3hs42"]
+width = 128
+height = 128
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_y5not")
+noise = SubResource("FastNoiseLite_pkmb8")
+
+[sub_resource type="FogMaterial" id="FogMaterial_b10hk"]
+density = 1.01309
+density_texture = SubResource("NoiseTexture3D_3hs42")
+
+[node name="DynamicFogVolume" type="FogVolume"]
+material = SubResource("FogMaterial_b10hk")
+script = ExtResource("1_3pyoj")

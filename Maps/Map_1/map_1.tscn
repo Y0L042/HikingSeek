@@ -1,4 +1,4 @@
-[gd_scene load_steps=272 format=3 uid="uid://cepbn866qq7vp"]
+[gd_scene load_steps=273 format=3 uid="uid://cepbn866qq7vp"]
 
 [ext_resource type="PackedScene" uid="uid://0odophvj6fb8" path="res://Props/WorldEnvironment/world_environment.tscn" id="1_3ctap"]
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_4vrwt"]
@@ -17,6 +17,7 @@
 [ext_resource type="ArrayMesh" uid="uid://cebvx6cuamkl3" path="res://Props/Clouds/Imports/Meshes/Environment_Mesh_108.res" id="16_qm3dm"]
 [ext_resource type="PackedScene" uid="uid://djssfrgedr3q0" path="res://Interactibles/PickUpAbles/PickUp_CompanionCube/pickup_companion_cube.tscn" id="17_0xyj4"]
 [ext_resource type="ArrayMesh" uid="uid://cly5l46x5mta2" path="res://Props/Clouds/Imports/Meshes/Environment_Mesh_107.res" id="17_qd6v5"]
+[ext_resource type="PackedScene" uid="uid://6uhco5oy5biy" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/pickup_portal_2_turret.tscn" id="18_8tkdy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2av61"]
 albedo_texture = ExtResource("2_4yp6w")
@@ -1077,10 +1078,12 @@ points = PackedVector3Array(-10.5625, 25.875, -21.75, -10.5625, -26.125, -21.75,
 [node name="WorldLighting" type="Marker3D" parent="World"]
 
 [node name="WorldEnvironment" parent="World/WorldLighting" instance=ExtResource("1_3ctap")]
-time_of_day = 0.0
-sky_rotation = 252.117
-minutes_per_day = 3.0
-background_energy_min = 0.5
+use_time_of_day = true
+time_of_day = 1800.0
+sky_rotation = 270.0
+minutes_per_day = 1.0
+DISABLE_EDITOR_MODE = false
+clamp_cos_value = 0.5
 
 [node name="MapGeometry" type="Marker3D" parent="World"]
 
@@ -1957,7 +1960,7 @@ transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 
 mesh = ExtResource("13_nd24c")
 
 [node name="Cloud_04" type="MeshInstance3D" parent="World/EnvironmentProps"]
-transform = Transform3D(0.14, 0, 0, 0, -6.11959e-09, -0.1, 0, 0.14, -4.37114e-09, -114, 58, 71)
+transform = Transform3D(0.14, 0, 0, 0, -6.11959e-09, -0.1, 0, 0.14, -4.37114e-09, -21, -54, 71)
 mesh = ExtResource("13_nd24c")
 
 [node name="Cloud_05" type="MeshInstance3D" parent="World/EnvironmentProps"]
@@ -1974,5 +1977,8 @@ visible = false
 mesh = ExtResource("16_qm3dm")
 
 [node name="Cloud_07" type="MeshInstance3D" parent="World/EnvironmentProps"]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, -44, 58, -49)
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 32, 58, 9)
 mesh = ExtResource("17_qd6v5")
+
+[node name="Portal2Turret" parent="." instance=ExtResource("18_8tkdy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.7926, 0, 10.6374)

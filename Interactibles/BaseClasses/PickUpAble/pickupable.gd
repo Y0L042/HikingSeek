@@ -14,6 +14,11 @@ var force_holder_to_drop: Callable
 var original_col_mask: int
 var original_col_layer: int
 
+signal pickedup
+signal dropped
+signal thrown
+signal beingcarried
+
 func _ready() -> void:
 	node_root.add_to_group(GRef.GROUP_INTERACTIBLE_PICKUPABLE)
 	original_col_mask = node_root.collision_mask
@@ -26,6 +31,7 @@ func _physics_process(delta: float) -> void:
 			force_holder_to_drop.call()
 
 func be_carried(delta: float) -> bool:
+	beingcarried.emit(holder)
 	var dist_exceeded: bool = false
 	#node_root.global_position = target_container.global_position
 	var target_dist_sqrd: float = move_towards_target(target_container.global_position)
@@ -38,6 +44,7 @@ func be_carried(delta: float) -> bool:
 	return dist_exceeded
 
 func hold(i_holder: Node3D, i_force_holder_to_drop: Callable, i_target_container: Node3D) -> void:
+	pickedup.emit(holder)
 	holder = i_holder
 	target_container = i_target_container
 	force_holder_to_drop = i_force_holder_to_drop
@@ -47,6 +54,7 @@ func hold(i_holder: Node3D, i_force_holder_to_drop: Callable, i_target_container
 	is_being_carried = true
 
 func drop() -> void:
+	dropped.emit(holder)
 	#node_root.collision_mask = original_col_mask
 	#holder.collision_mask += node_root.collision_layer
 	holder = null
@@ -55,10 +63,15 @@ func drop() -> void:
 	is_being_carried = false
 
 func throw(direction: Vector3, power: float) -> void:
-	drop()
+	thrown.emit(holder)
+	holder = null
+	target_container = null
+	collision_shape.disabled = false
+	is_being_carried = false
 	direction = direction.normalized()
 	power = clampf(power/node_root.mass, power/10, power)
 	node_root.apply_central_impulse(direction * Vector3.ONE * power)
+
 
 func move_towards_target(i_target: Vector3) -> float:
 	var current_pos: Vector3 = node_root.global_position

@@ -51,6 +51,14 @@ extends Node3D
 @export var background_energy_multiplier: float = 1
 @export var background_energy_min: float = 0.01
 
+#region ColorSettings
+@export_group("Color Settings")
+@export_color_no_alpha var sky_top_color_day: Color
+@export_color_no_alpha var sky_top_color_night: Color
+@export_color_no_alpha var sky_horizon_color_day: Color
+@export_color_no_alpha var sky_horizon_color_night: Color
+#endregion ColorSettings
+
 #region SunMoonSettings
 @export_subgroup("Sun and Moon")
 @export var sun_offset: float = 100:
@@ -69,12 +77,15 @@ extends Node3D
 		if Moon:
 			Moon.position.y = value
 #endregion SunMoonSettings
-
+@export_group("Debug")
+@export var DISABLE_EDITOR_MODE: bool = false
+@export var clamp_cos_value: float
 
 func _ready() -> void:
 	_set_sun_moon_rotation(sky_rotation)
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint() and DISABLE_EDITOR_MODE: return
 	if use_live_time: _set_real_time_sky(delta)
 	_rotate_sky()
 
@@ -82,7 +93,13 @@ func _set_real_time_sky(delta: float) -> void:
 		sky_rotation += delta*360 /60 /clampf(minutes_per_day, 0.001, INF)
 
 func _rotate_sky() -> void:
+	clamp_cos_value = clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2, background_energy_min, INF)
 	SkyEnvironment.environment.set_bg_energy_multiplier(clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2 * background_energy_multiplier, background_energy_min, INF))
+	SkyEnvironment.environment.sky.sky_material.sky_top_color = lerp(sky_top_color_night, sky_top_color_day,clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2, background_energy_min, INF))
+	SkyEnvironment.environment.sky.sky_material.sky_horizon_color = lerp(sky_horizon_color_night, sky_horizon_color_day,clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2, background_energy_min, INF))
+	SkyEnvironment.environment.sky.sky_material.sky_energy_multiplier = clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2, background_energy_min, INF)
+	SkyEnvironment.environment.fog_density = clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2, background_energy_min, INF) * 0.1
+	#SkyEnvironment.environment.volumetric_fog_density = clampf((-cos(deg_to_rad(sky_rotation)) + 1)/2, background_energy_min, INF) * 0.25
 
 func _set_sun_moon_rotation(i_rotation: float) -> void:
 	if SunMoon_ref:
