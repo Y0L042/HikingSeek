@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf3bjpyoc3vhd"]
+
+[ext_resource type="PackedScene" uid="uid://b8c853il2262w" path="res://Interactibles/BaseClasses/Interactible/interactible.tscn" id="1_sw5rj"]
+[ext_resource type="PackedScene" uid="uid://c21c1ayvqr2yd" path="res://Interactibles/BaseClasses/PickUpAble/pick_up_able.tscn" id="2_5lvtk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_esbwu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x6vfm"]
+size = Vector3(1.5, 1.5, 1.5)
+
+[node name="TestCube" type="RigidBody3D"]
+collision_layer = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_esbwu")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CollisionShape3D"]
+
+[node name="PickUpAble" parent="." node_paths=PackedStringArray("node_root", "collision_shape") instance=ExtResource("2_5lvtk")]
+node_root = NodePath("..")
+collision_shape = NodePath("../CollisionShape3D")
+
+[node name="Interactible" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("1_sw5rj")]
+node_root = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactible"]
+shape = SubResource("BoxShape3D_x6vfm")
+
+[editable path="Interactible"]

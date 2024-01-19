@@ -3,6 +3,7 @@ extends EntityBaseClass
 
 #region Export Variables
 @export_group("Node References")
+@export_subgroup("Character Body")
 @export var Body: CharacterBody3D
 @export var Spine: Node3D
 @export var Head: Node3D
@@ -12,13 +13,13 @@ extends EntityBaseClass
 @export var BodyShape_Crouch: CollisionShape3D
 @export var Interact_Raycast: RayCast3D
 @export var Pickup_Container: Marker3D
+@export var player_animation_manager: PlayerAnimationManager
 @export_subgroup("StairStep and Vault Raycast Node References")
 @export var STEP_UP_RAY_COUNT: float = 8
 @export var BaseStepUpSeparationRay: CollisionShape3D
 @export var StairBelowRay: RayCast3D
 @export var VaultRay: RayCast3D
 @export var VaultShapeCast: ShapeCast3D
-
 @export_group("Character Settings")
 @export_subgroup("Movement")
 @export var MOVE_STATS: MovementStatsResource
@@ -143,7 +144,7 @@ func _rotate_step_up_separation_ray() -> void:
 		ray.disabled = any_too_steep
 
 func _push_rigidbodies() -> void:
-	var push_force: float = 1
+	var push_force: float = 0.1
 	push_force = push_force * velocity.length()
 	push_force = clampf(push_force, 1, INF)
 	for i: int in get_slide_collision_count():
@@ -268,7 +269,7 @@ func vault() -> bool:
 		#DebugDraw3D.draw_sphere(VaultRay.get_collision_point() + Vector3.UP * 0.25, 0.25, Color.CHARTREUSE, 30) # HACK
 		body_flag_is_vaulting = true
 		var y_time: float = 0.85
-		var xz_time: float = 0.55
+		var xz_time: float = 0.75
 		var tween_y: Tween = get_tree().create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 		tween_y.tween_property(self, "global_position:y", VaultRay.get_collision_point().y, y_time).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 		tween_y.tween_callback((func() -> void: body_flag_is_vaulting = false))

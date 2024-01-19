@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmbnmqymgtyhj"]
+
+[ext_resource type="PackedScene" uid="uid://yteq84j3j4gw" path="res://entities/Player/Imports/fps_rig.glb" id="1_rixfd"]
+
+[node name="fps_rig_import" instance=ExtResource("1_rixfd")]
+
+[node name="Sphere" parent="." index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

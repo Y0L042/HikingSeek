@@ -1,19 +1,21 @@
-[gd_scene load_steps=27 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=29 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
 [ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
 [ext_resource type="PackedScene" uid="uid://dm5ca30ly74ow" path="res://Utils/SimpleFPSCamera/simple_fps_camera.tscn" id="2_owj77"]
 [ext_resource type="Resource" uid="uid://tj62diq6ijdu" path="res://entities/Player/Resources/player_movement_stats.tres" id="2_ytm56"]
+[ext_resource type="Script" path="res://entities/Player/Scripts/animation_manager.gd" id="3_4amwj"]
 [ext_resource type="PackedScene" uid="uid://dpk5eqnpldcax" path="res://entities/Player/Components/PlayerInteractor/player_interactor.tscn" id="3_75xq8"]
 [ext_resource type="PackedScene" uid="uid://ck7ix6eiplcos" path="res://Utils/StateMachine/state.tscn" id="3_jtqg0"]
 [ext_resource type="Shape3D" uid="uid://d1kjh45ym8m2c" path="res://entities/Player/Resources/Player_body_stand.tres" id="3_nkcvc"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_idle.gd" id="4_aw57w"]
 [ext_resource type="Shape3D" uid="uid://d03ioi5rux4jl" path="res://entities/Player/Resources/Player_body_crouch.tres" id="4_vrbe4"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground.gd" id="5_i1bfk"]
+[ext_resource type="PackedScene" uid="uid://dmbnmqymgtyhj" path="res://entities/Player/Imports/fps_rig_import.tscn" id="6_dlr04"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/player_state_class.gd" id="6_rk5f0"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_walk.gd" id="7_3ifpr"]
+[ext_resource type="Script" path="res://entities/Player/Scripts/IK_Start.gd" id="7_ags44"]
 [ext_resource type="PackedScene" uid="uid://de24xyfl10kgy" path="res://UI/HUD/Crosshairs/crosshair.tscn" id="7_b3c7t"]
-[ext_resource type="PackedScene" uid="uid://tvh3dun5s32q" path="res://Items/wpn_shotgun_plasma/wpn_shotgun_plasma.tscn" id="8_3m2jk"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair_idle.gd" id="8_8qixk"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_sprint.gd" id="8_bvmlt"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair_move.gd" id="9_gaje5"]
@@ -58,7 +60,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Body", "Spine", "Head", "CrouchHigh", "CrouchLow", "BodyShape_Stand", "BodyShape_Crouch", "Interact_Raycast", "Pickup_Container", "BaseStepUpSeparationRay", "StairBelowRay", "VaultRay", "VaultShapeCast")]
 collision_layer = 2
-collision_mask = 29
+collision_mask = 13
 script = ExtResource("1_s7lkf")
 Body = NodePath(".")
 Spine = NodePath("Spine")
@@ -76,11 +78,13 @@ VaultShapeCast = NodePath("VaultShapeCast")
 MOVE_STATS = ExtResource("2_ytm56")
 JUMP_FRAME_GRACE = 6.0
 
-[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("node_root", "Interact_Raycast", "Pickup_Raycast", "Pickup_Container") instance=ExtResource("3_75xq8")]
+[node name="AnimationManager" type="Node3D" parent="."]
+script = ExtResource("3_4amwj")
+
+[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("node_root", "Interact_Raycast", "Pickup_Container") instance=ExtResource("3_75xq8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
 node_root = NodePath("..")
 Interact_Raycast = NodePath("../Spine/Head/CameraContainer/SimpleFPSCamera/InteractRaycast")
-Pickup_Raycast = NodePath("../Spine/Head/CameraContainer/SimpleFPSCamera/PickupRaycast")
 Pickup_Container = NodePath("../Spine/Head/PickUpContainer")
 
 [node name="GroundTest" type="CollisionShape3D" parent="."]
@@ -128,6 +132,85 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
 [node name="CrouchLow" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 
+[node name="fps_rig_import" parent="." instance=ExtResource("6_dlr04")]
+
+[node name="Skeleton3D" parent="fps_rig_import/Sphere/FullBodyIKRig" index="0"]
+bones/7/rotation = Quaternion(-0.554406, -0.434814, 0.568866, -0.424219)
+bones/8/rotation = Quaternion(-0.134614, -0.00291372, -0.0172311, 0.990744)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(-0.00446266, -0.0295275, -0.036716, 0.998879)
+bones/11/rotation = Quaternion(0.244556, 0.10119, 0.134322, 0.95494)
+bones/12/rotation = Quaternion(0.000375229, -0.00488865, 0.106029, 0.994351)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(-0.00183587, -0.0149494, 0.0924704, 0.995602)
+bones/15/rotation = Quaternion(-2.72814e-05, 0.00314425, -0.00887831, 0.999956)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(1.78549e-05, -0.000949107, -0.00190488, 0.999998)
+bones/17/rotation = Quaternion(-1.27869e-05, -0.000828688, 0.0380465, 0.999276)
+bones/19/rotation = Quaternion(0.556026, -0.433601, 0.567468, 0.425213)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(-0.134804, 0.00232542, 0.019977, 0.990668)
+bones/21/rotation = Quaternion(0.00578431, 0.00361422, -0.066928, 0.997734)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.233095, -0.0935464, -0.165001, 0.953777)
+bones/23/scale = Vector3(1, 1, 1)
+bones/24/rotation = Quaternion(0.000552356, 0.00697573, -0.0694681, 0.99756)
+bones/25/rotation = Quaternion(-0.0017291, 0.0187061, -0.101547, 0.994653)
+bones/25/scale = Vector3(1, 1, 1)
+bones/26/rotation = Quaternion(1.86264e-08, -1.30385e-08, 9.31323e-09, 1)
+bones/27/rotation = Quaternion(3.89405e-06, -0.00117069, -0.00388573, 0.999992)
+bones/27/scale = Vector3(1, 1, 1)
+bones/28/rotation = Quaternion(2.21431e-06, -0.000178965, 0.00445701, 0.99999)
+bones/28/scale = Vector3(1, 1, 1)
+bones/29/rotation = Quaternion(-3.54116e-07, 0.000244551, 0.00447451, 0.99999)
+bones/31/rotation = Quaternion(-0.000230056, -0.00875845, 0.999947, -0.00539246)
+bones/31/scale = Vector3(1, 1, 1)
+bones/32/rotation = Quaternion(-0.020681, 0.00024336, -0.0117363, 0.999717)
+bones/32/scale = Vector3(1, 1, 1)
+bones/33/rotation = Quaternion(0.478661, -0.0186595, 0.0220547, 0.877524)
+bones/33/scale = Vector3(1, 1, 1)
+bones/34/rotation = Quaternion(0.309351, 0.0219822, -0.00715467, 0.950667)
+bones/34/scale = Vector3(1, 1, 1)
+bones/36/rotation = Quaternion(0.000347135, -0.0131955, 0.999898, 0.00538947)
+bones/37/rotation = Quaternion(-0.0169216, -0.000198837, 0.0117363, 0.999788)
+bones/37/scale = Vector3(1, 1, 1)
+bones/38/rotation = Quaternion(0.486445, 0.0177385, -0.0218156, 0.873259)
+bones/39/rotation = Quaternion(0.301575, -0.0217946, 0.00689395, 0.953168)
+bones/39/scale = Vector3(1, 1, 1)
+bones/41/rotation = Quaternion(0.477192, -0.477192, 0.521812, 0.521812)
+bones/42/rotation = Quaternion(0, 0.999106, 0, 0.0422845)
+bones/43/rotation = Quaternion(0, 0.999147, 0, -0.0412828)
+bones/43/scale = Vector3(1, 1, 1)
+bones/44/rotation = Quaternion(0.460994, 0.460994, -0.536176, 0.536175)
+bones/44/scale = Vector3(1, 1, 1)
+bones/45/rotation = Quaternion(-0.706504, 0.706504, -0.0291914, -0.0291913)
+bones/46/rotation = Quaternion(0.706474, 0.706474, -0.0298997, 0.0298996)
+bones/46/scale = Vector3(1, 1, 1)
+bones/47/rotation = Quaternion(-0.00401101, 0.707095, 0.707095, -0.00401101)
+bones/48/rotation = Quaternion(0.00411098, 0.707095, 0.707095, 0.00411098)
+bones/49/rotation = Quaternion(0.0208102, 0.452497, 0.891363, -0.0169047)
+bones/49/scale = Vector3(1, 1, 1)
+bones/50/rotation = Quaternion(-0.0198971, 0.459808, 0.887639, 0.0166541)
+bones/50/scale = Vector3(1, 1, 1)
+
+[node name="SK_Character_Robot_01_Head" parent="fps_rig_import/Sphere/FullBodyIKRig/Skeleton3D" index="1"]
+layers = 2
+
+[node name="LHandIK" type="SkeletonIK3D" parent="fps_rig_import/Sphere/FullBodyIKRig/Skeleton3D" index="4"]
+process_priority = 1
+root_bone = &"mixamorig_LeftShoulder"
+tip_bone = &"mixamorig_LeftHandIndex1"
+max_iterations = 5
+script = ExtResource("7_ags44")
+
+[node name="RHandIK" type="SkeletonIK3D" parent="fps_rig_import/Sphere/FullBodyIKRig/Skeleton3D" index="5"]
+process_priority = 1
+root_bone = &"mixamorig_RightShoulder"
+tip_bone = &"mixamorig_RightHandIndex1"
+max_iterations = 5
+script = ExtResource("7_ags44")
+
 [node name="Spine" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71238, 0)
@@ -139,7 +222,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.017, -2)
 
 [node name="CameraContainer" type="Marker3D" parent="Spine/Head"]
-metadata/_edit_group_ = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15)
 
 [node name="SimpleFPSCamera" parent="Spine/Head/CameraContainer" node_paths=PackedStringArray("character", "rot_target_y", "rot_target_x") instance=ExtResource("2_owj77")]
 cull_mask = 1
@@ -150,8 +233,6 @@ rot_target_x = NodePath("../../..")
 BOB_EFFECTS_ENABLED = true
 BOB_FREQ = 1.2
 BOB_AMP = 0.06
-FOV_EFFECTS_ENABLED = true
-BASE_FOV = 90.0
 
 [node name="Crosshair" parent="Spine/Head/CameraContainer/SimpleFPSCamera" instance=ExtResource("7_b3c7t")]
 crosshair_color = Color(0.501961, 0.501961, 0.501961, 1)
@@ -163,17 +244,13 @@ collide_with_areas = true
 debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
 debug_shape_thickness = 1
 
-[node name="PickupRaycast" type="RayCast3D" parent="Spine/Head/CameraContainer/SimpleFPSCamera"]
-target_position = Vector3(0, 0, -5)
-collision_mask = 8
-debug_shape_custom_color = Color(0, 0.8, 0, 0.223529)
-debug_shape_thickness = 1
+[node name="LHandIK_Target" type="Marker3D" parent="Spine/Head"]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, -0.8, -0.361, 0)
 
-[node name="WeaponContainer" type="Marker3D" parent="Spine"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.194351, -0.443827, -0.477977)
-
-[node name="Shotgun_Plasma" parent="Spine/WeaponContainer" instance=ExtResource("8_3m2jk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0448071, 0, -0.148949)
+[node name="RHandIK_Target" type="Marker3D" parent="Spine/Head"]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0.8, -0.360904, 0)
 
 [node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
 node_root = NodePath("..")
@@ -213,3 +290,5 @@ script = ExtResource("18_q70x2")
 
 [node name="MouseCaptureDebug" type="Node" parent="."]
 script = SubResource("GDScript_ocyux")
+
+[editable path="fps_rig_import"]

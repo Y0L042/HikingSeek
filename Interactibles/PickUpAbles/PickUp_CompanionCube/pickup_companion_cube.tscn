@@ -7,12 +7,12 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wehmf"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_or77e"]
-size = Vector3(0.1, 0.1, 0.1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_yoilx"]
+size = Vector3(1.1, 1.1, 1.1)
 
 [node name="CompanionCube" type="RigidBody3D"]
 collision_layer = 8
-collision_mask = 13
+collision_mask = 29
 script = ExtResource("1_fvbr5")
 
 [node name="Sketchfab_companioncube_import" parent="." instance=ExtResource("1_8ybl2")]
@@ -28,7 +28,7 @@ collision_shape = NodePath("../CollisionShape3D")
 [node name="Interactible" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("3_rfofl")]
 node_root = NodePath("..")
 
-[node name="CollisionShape3D" parent="Interactible" index="0"]
-shape = SubResource("BoxShape3D_or77e")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactible"]
+shape = SubResource("BoxShape3D_yoilx")
 
 [editable path="Interactible"]

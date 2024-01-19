@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba1wi4qiv7j87"]
+
+[ext_resource type="PackedScene" uid="uid://cnyhi7lwhbw7" path="res://Items/wpn_shotgun_plasma/Imports/plasma_shotgun.glb" id="1_1rr6v"]
+
+[node name="plasma_shotgun_import" instance=ExtResource("1_1rr6v")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

@@ -11,6 +11,7 @@ signal focused
 signal unfocused
 
 func _ready() -> void:
+	add_to_group(GRef.GROUP_INTERACTIBLE_OBJECT)
 	if node_root:
 		node_root.add_to_group(GRef.GROUP_INTERACTIBLE_OBJECT)
 

@@ -20,6 +20,7 @@ signal thrown
 signal beingcarried
 
 func _ready() -> void:
+	add_to_group(GRef.GROUP_INTERACTIBLE_PICKUPABLE)
 	node_root.add_to_group(GRef.GROUP_INTERACTIBLE_PICKUPABLE)
 	original_col_mask = node_root.collision_mask
 	original_col_layer = node_root.collision_layer
@@ -71,7 +72,6 @@ func throw(direction: Vector3, power: float) -> void:
 	direction = direction.normalized()
 	power = clampf(power/node_root.mass, power/10, power)
 	node_root.apply_central_impulse(direction * Vector3.ONE * power)
-
 
 func move_towards_target(i_target: Vector3) -> float:
 	var current_pos: Vector3 = node_root.global_position

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://flqy636tqp62"
+path="res://.godot/imported/testmap2.obj-82358e0f3e2692e5a49490d6316e232d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/testmap2.obj-82358e0f3e2692e5a49490d6316e232d.mesh"]
+
+source_file="res://trenchbroom/maps/CS2HammerMaps/testmap2.obj"
+dest_files=["res://.godot/imported/testmap2.obj-82358e0f3e2692e5a49490d6316e232d.mesh", "res://.godot/imported/testmap2.obj-82358e0f3e2692e5a49490d6316e232d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

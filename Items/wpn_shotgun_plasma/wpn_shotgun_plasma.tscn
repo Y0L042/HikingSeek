@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://tvh3dun5s32q"]
+
+[ext_resource type="PackedScene" uid="uid://ba1wi4qiv7j87" path="res://Items/wpn_shotgun_plasma/Imports/plasma_shotgun_import.tscn" id="1_4n4f6"]
+[ext_resource type="Script" path="res://Items/wpn_shotgun_plasma/Scripts/weapon_sway.gd" id="1_8w74u"]
+
+[node name="Shotgun_Plasma" type="Node3D"]
+
+[node name="WeaponSway" type="Marker3D" parent="."]
+script = ExtResource("1_8w74u")
+sway_left = Vector3(0, 0.1, 0)
+sway_right = Vector3(0, 0.1, 0)
+
+[node name="plasma_shotgun_import" parent="WeaponSway" instance=ExtResource("1_4n4f6")]
+
+[node name="Skeleton3D" parent="WeaponSway/plasma_shotgun_import/Shotgun_Plasma" index="3"]
+bones/0/rotation = Quaternion(0.707107, -2.21972e-07, -2.21972e-07, 0.707107)
+bones/4/rotation = Quaternion(0.707107, -3.45607e-07, -7.89552e-07, 0.707107)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[editable path="WeaponSway/plasma_shotgun_import"]
