@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://doic6x0dik5ju"]
+
+[ext_resource type="Script" path="res://Items/ammo_grapple_hook/ammo_grapple_hook.gd" id="1_xrv5p"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_k1k1w"]
+radius = 0.25
+
+[node name="AmmoGrappleHook" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00573134, -3.57628e-07, 0.00313044)
+collision_layer = 8
+collision_mask = 15
+mass = 0.01
+script = ExtResource("1_xrv5p")
+linear_firing_force = 100.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_k1k1w")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CollisionShape3D"]
+radius = 0.25

@@ -38,7 +38,7 @@ project/assembly_name="HikingSeek"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/tabby_explorer/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/tabby_explorer/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/verlet_rope_4/plugin.cfg")
 
 [file_customization]
 

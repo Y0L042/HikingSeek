@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bixl2bghc80tt"]
+[gd_scene load_steps=28 format=3 uid="uid://bixl2bghc80tt"]
 
 [ext_resource type="Script" path="res://entities/Player/Player.gd" id="1_s7lkf"]
 [ext_resource type="PackedScene" uid="uid://btbrbcs5sh085" path="res://entities/Player/PlayerStateMachine/SM_Handler/player_state_machine_handler.tscn" id="2_8kf2d"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onground_crouch.gd" id="12_4t5gy"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_inair.gd" id="13_r355b"]
 [ext_resource type="Script" path="res://entities/Player/PlayerStateMachine/States/state_onclimbable.gd" id="18_q70x2"]
+[ext_resource type="Script" path="res://entities/Player/Scripts/player_weapon_manager.gd" id="22_hxjxj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nxaro"]
 radius = 0.2
@@ -148,7 +149,7 @@ character = NodePath("../../../..")
 rot_target_y = NodePath("../../../..")
 rot_target_x = NodePath("../../..")
 BOB_EFFECTS_ENABLED = true
-BOB_FREQ = 1.2
+BOB_FREQ = 1.35
 BOB_AMP = 0.06
 FOV_EFFECTS_ENABLED = true
 BASE_FOV = 90.0
@@ -174,6 +175,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.194351, -0.443827, -0.47797
 
 [node name="Shotgun_Plasma" parent="Spine/WeaponContainer" instance=ExtResource("8_3m2jk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0448071, 0, -0.148949)
+firing_mode = null
+firing_rate_rpm = null
 
 [node name="PlayerStateMachineHandler" parent="." node_paths=PackedStringArray("node_root") instance=ExtResource("2_8kf2d")]
 node_root = NodePath("..")
@@ -213,3 +216,8 @@ script = ExtResource("18_q70x2")
 
 [node name="MouseCaptureDebug" type="Node" parent="."]
 script = SubResource("GDScript_ocyux")
+
+[node name="PlayerWeaponManager" type="Node3D" parent="." node_paths=PackedStringArray("node_root", "weapon")]
+script = ExtResource("22_hxjxj")
+node_root = NodePath("..")
+weapon = NodePath("../Spine/WeaponContainer/Shotgun_Plasma")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=283 format=3 uid="uid://cepbn866qq7vp"]
+[gd_scene load_steps=286 format=3 uid="uid://cepbn866qq7vp"]
 
 [ext_resource type="PackedScene" uid="uid://0odophvj6fb8" path="res://Props/WorldEnvironment/world_environment.tscn" id="1_3ctap"]
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_4vrwt"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://c8fubil2vl33p" path="res://trenchbroom/textures/Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_07.png" id="7_jaaui"]
 [ext_resource type="Texture2D" uid="uid://cuhenk2vi4mql" path="res://trenchbroom/textures/Synty_Prototype_Pack/PolygonPrototype_Texture_Grid_02.png" id="8_deayx"]
 [ext_resource type="Script" path="res://trenchbroom/definitions/classes/brush_classes/climbable_area.gd" id="8_v57ao"]
+[ext_resource type="Material" uid="uid://o7na8drc2je2" path="res://addons/verlet_rope_4/materials/rope_default.material" id="11_ji1q4"]
+[ext_resource type="Script" path="res://addons/verlet_rope_4/VerletRope.cs" id="12_3ynf2"]
 [ext_resource type="ArrayMesh" uid="uid://bjjxpagupenk" path="res://Props/Clouds/Imports/Meshes/Environment_Mesh_109.res" id="13_8t0jw"]
 [ext_resource type="PackedScene" uid="uid://cmpgkpexq1plt" path="res://Props/StreetLamp_01/streetlamp_01.tscn" id="13_ft5jx"]
 [ext_resource type="ArrayMesh" uid="uid://bfy5gami2wi8i" path="res://Props/Clouds/Imports/Meshes/Environment_Mesh_106.res" id="13_nd24c"]
@@ -19,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://djssfrgedr3q0" path="res://Interactibles/PickUpAbles/PickUp_CompanionCube/pickup_companion_cube.tscn" id="17_0xyj4"]
 [ext_resource type="ArrayMesh" uid="uid://cly5l46x5mta2" path="res://Props/Clouds/Imports/Meshes/Environment_Mesh_107.res" id="17_qd6v5"]
 [ext_resource type="PackedScene" uid="uid://6uhco5oy5biy" path="res://Interactibles/PickUpAbles/PickUp_Portal2Turret/pickup_portal_2_turret.tscn" id="18_8tkdy"]
-[ext_resource type="PackedScene" uid="uid://cf3bjpyoc3vhd" path="res://Interactibles/PickUpAbles/PickUp_TestCube/test_cube.tscn" id="20_mnxat"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2av61"]
 albedo_texture = ExtResource("2_4yp6w")
@@ -1108,6 +1109,12 @@ points = PackedVector3Array(13.4375, 25.875, -15.75, 13.4375, -26.125, -15.75, 2
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pw13k"]
 points = PackedVector3Array(-10.5625, 25.875, -21.75, -10.5625, -26.125, -21.75, 7.4375, -26.125, -21.75, 7.4375, 25.875, -21.75, -10.5625, 25.875, -2.75, -10.5625, -26.125, -2.75, 7.4375, -26.125, -2.75, 7.4375, 25.875, -2.75)
 
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_y1bih"]
+resource_local_to_scene = true
+metadata/creation_stamp = 72690828394926
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t0c6x"]
+
 [node name="Map_1" type="Node3D"]
 
 [node name="World" type="Marker3D" parent="."]
@@ -1983,6 +1990,28 @@ shape = SubResource("ConvexPolygonShape3D_eawhc")
 [node name="entity_21_brush_7_collision_shape" type="CollisionShape3D" parent="World/MapGeometry/QodotMap/entity_21_func_group"]
 shape = SubResource("ConvexPolygonShape3D_pw13k")
 
+[node name="Ropes" type="Marker3D" parent="World/MapGeometry"]
+
+[node name="VerletRope" type="MeshInstance3D" parent="World/MapGeometry/Ropes" node_paths=PackedStringArray("AttachEnd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.26332, 17.9813, 12.484)
+material_override = ExtResource("11_ji1q4")
+mesh = SubResource("ImmediateMesh_y1bih")
+script = ExtResource("12_3ynf2")
+AttachEnd = NodePath("End")
+RopeLength = 10.0
+RopeWidth = 0.02
+ApplyWind = true
+WindNoise = SubResource("FastNoiseLite_t0c6x")
+ApplyCollision = true
+CollisionMask = 15
+metadata/_edit_group_ = true
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="World/MapGeometry/Ropes/VerletRope"]
+aabb = AABB(-4.74061, -3.2651, -0.00937103, 4.75215, 3.27848, 7.53796)
+
+[node name="End" type="Marker3D" parent="World/MapGeometry/Ropes/VerletRope"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.74009, -1.99613, 7.62467)
+
 [node name="Entities" type="Marker3D" parent="World"]
 
 [node name="Player" parent="World/Entities" instance=ExtResource("3_0fihh")]
@@ -1997,7 +2026,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1.1, 8)
 transform = Transform3D(0.846695, 0, -0.532079, 0, 1, 0, 0.532079, 0, 0.846695, -11.7345, 13.1, 3.40259)
 
 [node name="Portal2Turret" parent="World/PickUpAbleInteractibles" instance=ExtResource("18_8tkdy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.7926, 0, 10.6374)
+transform = Transform3D(-0.867982, 0, 0.496595, 0, 1, 0, -0.496595, 0, -0.867982, -1.82466, 20.0936, 2.61064)
 
 [node name="EnvironmentProps" type="Marker3D" parent="World"]
 
@@ -2045,6 +2074,3 @@ mesh = ExtResource("16_qm3dm")
 [node name="Cloud_07" type="MeshInstance3D" parent="World/EnvironmentProps"]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 32, 58, 9)
 mesh = ExtResource("17_qd6v5")
-
-[node name="TestCube" parent="." instance=ExtResource("20_mnxat")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 1, 6)

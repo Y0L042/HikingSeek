@@ -1,14 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://tvh3dun5s32q"]
+[gd_scene load_steps=6 format=3 uid="uid://tvh3dun5s32q"]
 
 [ext_resource type="PackedScene" uid="uid://ba1wi4qiv7j87" path="res://Items/wpn_shotgun_plasma/Imports/plasma_shotgun_import.tscn" id="1_4n4f6"]
 [ext_resource type="Script" path="res://Items/wpn_shotgun_plasma/Scripts/weapon_sway.gd" id="1_8w74u"]
+[ext_resource type="Script" path="res://Items/wpn_shotgun_plasma/wpn_shotgun_plasma.gd" id="1_bhewn"]
+[ext_resource type="PackedScene" uid="uid://doic6x0dik5ju" path="res://Items/ammo_grapple_hook/ammo_grapple_hook.tscn" id="2_ab7tt"]
+[ext_resource type="Script" path="res://Items/wpn_shotgun_plasma/firing_mechanism.gd" id="3_jv5v2"]
 
-[node name="Shotgun_Plasma" type="Node3D"]
+[node name="Shotgun_Plasma" type="Node3D" node_paths=PackedStringArray("muzzle_target")]
+script = ExtResource("1_bhewn")
+ammo_packedscene_path = "res://Items/ammo_grapple_hook/ammo_grapple_hook.tscn"
+ammo_packedscene = ExtResource("2_ab7tt")
+muzzle_target = NodePath("MuzzleTarget")
+firing_mode = 1
+firing_rate_rpm = 600.0
 
-[node name="WeaponSway" type="Marker3D" parent="."]
+[node name="FiringMechanism" type="Node3D" parent="."]
+script = ExtResource("3_jv5v2")
+
+[node name="WeaponSway" type="Marker3D" parent="." node_paths=PackedStringArray("node_root")]
+top_level = true
 script = ExtResource("1_8w74u")
-sway_left = Vector3(0, 0.1, 0)
-sway_right = Vector3(0, 0.1, 0)
+node_root = NodePath("..")
+turn_threshold = 0.5
+linear_lerp_speed = 25.0
+angular_lerp_speed = 20.0
+sway_left = Vector3(0, -0.25, 0)
+sway_right = Vector3(0, 0.25, 0)
 
 [node name="plasma_shotgun_import" parent="WeaponSway" instance=ExtResource("1_4n4f6")]
 
@@ -17,5 +34,10 @@ bones/0/rotation = Quaternion(0.707107, -2.21972e-07, -2.21972e-07, 0.707107)
 bones/4/rotation = Quaternion(0.707107, -3.45607e-07, -7.89552e-07, 0.707107)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MuzzleTarget" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.133196, -0.71601)
+
+[connection signal="primary_action_executed" from="FiringMechanism" to="." method="_on_primary_action_executed"]
 
 [editable path="WeaponSway/plasma_shotgun_import"]
